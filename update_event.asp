@@ -1,6 +1,8 @@
 <%
-Dim id
+Dim id, start, endd
 id = Request.Form("id")
+start = Request.Form("start")
+endd = Request.Form("end")
 
 ' Connessione al database
 Dim connString
@@ -9,14 +11,14 @@ Dim conn
 Set conn = Server.CreateObject("ADODB.Connection")
 conn.Open connString
 
-' Elimina l'evento dal database
+' Aggiornamento dell'evento nel database
 Dim strSQL
-strSQL = "DELETE FROM events WHERE id = '" & id & "'"
+strSQL = "UPDATE events SET StartDate = '" & start & "', EndDate = '" & endd & "' WHERE id = '" & id & "'"
 conn.Execute(strSQL)
 
 ' Chiusura della connessione al database
 conn.Close
 Set conn = Nothing
 
-Response.Write("Event deleted")
+Response.Write("Event updated in the database.")
 %>

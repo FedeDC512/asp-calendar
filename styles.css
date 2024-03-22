@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    background-color: #FFFFFE;
+    font-family: serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.stick-regular {
+    font-family: "Stick", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }  
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FE4C6F;
+  }
+
+  .homepage-title {
+    color: #531319;
+    font-size: xx-large;
+}
+  
+  .h-logoname{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .h-icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .rhino{
+    color: #531319;  
+    font-size: 2.5rem;
+  }
+  
+  .h-button{
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  .h-button:hover{
+    background-color: #531319;
+    color: #FE4C6F;
+  }
+
+  .homepage-division{
+    display: flex;
+  }
+
+  .calendar-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 2rem 1rem;
+  }
+
+  .info-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 2rem 1rem;
+  }
