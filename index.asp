@@ -16,9 +16,10 @@
     <script>
     function hideEventInfo() {
         var infoItem = document.getElementById('event-info');
-        infoItem.innerHTML = ''; // Svuota il contenuto del div delle informazioni dell'evento
+        infoItem.innerHTML = '<div class="event-title">Select an Event from the Calendar</div>'; // Svuota il contenuto del div delle informazioni dell'evento
     }
 
+    
     function deleteEvent(id) {
         if (confirm("Do you want to delete this event?")) {
             $.ajax({
@@ -29,13 +30,17 @@
                 },
                 success: function(response) {
                     console.log('Event deleted');
-                    //event.remove(); // Rimuove l'evento dal calendario
-                    /*var calendarEl = document.getElementById('calendar');
-                    var calendar = calendarEl.getApi();
+                    var calendar = $('#calendar').data('fullCalendarObj'); //retreive the object from data attr (IMPORTANTE!)
                     var event = calendar.getEventById(id);
+
+                    // Verifica se l'evento esiste
                     if (event) {
-                        event.remove(); // Rimuove l'evento dal calendario
-                    }*/
+                        // Rimuovi l'evento dal calendario
+                        event.remove();
+                        console.log('Event with ID ' + id + ' deleted successfully.');
+                    } else {
+                        console.error('Event with ID ' + id + ' not found.');
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error deleting event:', error);
@@ -63,8 +68,10 @@
                     var startTime = prompt('Enter the start time (HH:mm):');
                     var endTime = prompt('Enter the end time (HH:mm):');
                     if (startTime && endTime) {
-                        var start = info.startStr.split('T')[0] + 'T' + startTime;
-                        var end = info.endStr.split('T')[0] + 'T' + endTime;
+                        var start = info.startStr;
+                        var end = info.endStr;
+                        /*var start = info.startStr.split('T')[0] + 'T' + startTime;
+                        var end = info.endStr.split('T')[0] + 'T' + endTime;*/
                         var eventData = {
                             title: title,
                             start: start,
@@ -82,21 +89,18 @@
             eventClick: function(info) {
                 showEventInfo(info.event);
             },
-            /*eventClick: function(info) {
-                if (confirm("Do you want to delete this event?")) {
-                    deleteEvent(info.event);
-                }
-            },*/
             eventDrop: function(info) {
                 updateEvent(info.event);
             }
         });
 
+        $(calendarEl).data('fullCalendarObj',calendar); //save the calendar pointer in data attached to Dom object
+
         calendar.render();
         
         // Carica gli eventi dal database quando la pagina viene caricata
         loadEvents();
-        
+            
         function loadEvents() {
             $.ajax({
                 url: 'get_events.asp', // Script ASP per recuperare gli eventi dal database
@@ -148,14 +152,16 @@
         function showEventInfo(event) {
             console.log(event.id);
             var infoItem = document.getElementById('event-info');
-            var html = '<p><strong>Title:</strong> ' + event.title + '</p>';
-            html += '<p><strong>Car:</strong> ' + event.extendedProps.car + '</p>';
-            html += '<p><strong>Start:</strong> ' + event.start.toLocaleString() + '</p>';
-            html += '<p><strong>End:</strong> ' + event.end.toLocaleString() + '</p>';
-            html += '<button onclick="deleteEvent(' + event.id + ')">Delete</button>'; //TODO: non funziona
-            html += '<button onclick="hideEventInfo()">Close</button>';
+            var html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+            <button onclick="hideEventInfo()">Close</button></div>
+            <p><strong>Title:</strong> ${event.title} </p>
+            <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+            <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
+            <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
+            <button onclick="deleteEvent( ${event.id} )">Delete</button>`;
             infoItem.innerHTML = html;
         }
+
     });
     </script>
 </head>
@@ -176,7 +182,19 @@
     <div class="calendar-column">
         <div id='calendar'></div>
     </div>
-    <div class="info-column" id="event-info">
+    <div class="info-column">
+        <div class="event-info">
+            <div class="event-title">Calendar Tutorial:</div>
+            <p>Here are some basic instructions on how to use the calendar:</p>
+            <ul>
+                <li><strong>To Add Events:</strong> Click on a day to select it, then fill out the event details in the prompt.</li>
+                <li><strong>To Move Events:</strong> Click and drag an event to a new time or date.</li>
+                <li><strong>To Delete Events:</strong> Click on an event and select "Delete" from the info menu.</li>
+            </ul>
+        </div>
+        <div class="event-info" id="event-info">
+            <div class="event-title">Select an Event from the Calendar</div>
+        </div>
 
     </div>
 </div>
