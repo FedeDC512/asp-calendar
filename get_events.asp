@@ -7,13 +7,13 @@ conn.Open connString
 
 ' Recupera gli eventi dal database
 Dim strSQL, rsEvents, events
-strSQL = "SELECT id, Title, Car, DATE_FORMAT(StartDate, '%Y-%m-%d') AS StartDate, DATE_FORMAT(EndDate, '%Y-%m-%d') AS EndDate FROM events"
+strSQL = "SELECT id, Title, Car, DATE_FORMAT(StartDate, '%Y-%m-%d') AS StartDate, DATE_FORMAT(EndDate, '%Y-%m-%d') AS EndDate, CreatedBy FROM events"
 Set rsEvents = conn.Execute(strSQL)
 
 If Not rsEvents.EOF Then
     events = "[" ' Inizia l'array JSON
     Do While Not rsEvents.EOF
-        events = events & "{""id"":""" & rsEvents("id") & """, ""car"":""" & rsEvents("Car") & """, ""title"":""" & rsEvents("Title") & """, ""start"":""" & rsEvents("StartDate") & """, ""end"":""" & rsEvents("EndDate") & """}"
+        events = events & "{""id"":""" & rsEvents("id") & """, ""car"":""" & rsEvents("Car") & """, ""title"":""" & rsEvents("Title") & """, ""start"":""" & rsEvents("StartDate") & """, ""end"":""" & rsEvents("EndDate") & """, ""creator"":""" & rsEvents("CreatedBy") & """}"
         rsEvents.MoveNext
         If Not rsEvents.EOF Then
             events = events & "," ' Aggiungi una virgola se non è l'ultimo evento
