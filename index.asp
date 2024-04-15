@@ -60,16 +60,28 @@ End If
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>Ruby Rhino Rentals - Login</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Effettua il login</h2>
-    <form method="post" action="index.asp">
-        <label>Username:</label><br>
-        <input type="text" name="username"><br>
-        <label>Password:</label><br>
-        <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-title stick-regular">Effettua il login</div>
+            <form class="form" method="post" action="index.asp">
+                <div>
+                    <label>Username:</label><br>
+                    <input type="text" name="username"><br>
+                </div>
+                <div>
+                    <label>Password:</label><br>
+                    <input type="password" name="password"><br>
+                </div>
+                <input type="submit" value="Login">
+            </form>
+            </div>
+    </div>
 </body>
 </html>
