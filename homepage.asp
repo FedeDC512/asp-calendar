@@ -61,6 +61,7 @@ End If
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
+            defaultAllDay: false,
             initialView: 'dayGridMonth',
             headerToolbar: {
                 left: 'prev,next today',
@@ -72,28 +73,55 @@ End If
             select: function(info) {
                 var title = prompt('Insert event title:');
                 if (title) {
-                    var car = prompt('Enter the Car model:');
-                    var startTime = prompt('Enter the start time (HH:mm):');
-                    var endTime = prompt('Enter the end time (HH:mm):');
                     var creator = <%=Session("userID")%>;
-                    if (startTime && endTime) {
+                    var car = prompt('Enter the Car model:');
+                    var answer = prompt("Do you want to rent the car for the whole day(s)?\nAnswer with 'yes' or 'no'", "yes");
+                    answer = answer.toLowerCase();
+                    var allDay = (answer == 'yes') ? 1 : 0; //1 = true, 0 = false. in MySql there is no boolean :(
+                    if (allDay == 0){
+                        var startTime = prompt('Enter the start time (HH:mm):');
+                        var endTime = prompt('Enter the end time (HH:mm):');
+
+                        if (startTime && endTime) {
+                            var start = info.startStr.split('T')[0] + 'T' + startTime;
+                            var end = info.endStr.split('T')[0] + 'T' + endTime;
+                            console.log(start);
+
+                            var endVisual = new Date(info.endStr); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                            var giorno = endVisual.getDate();
+                            endVisual.setDate(giorno - 1);
+                            var endVisual = endVisual.toISOString().split('T')[0] + 'T' + endTime;
+
+                            var eventData = {
+                                title: title,
+                                start: start,
+                                end: endVisual, //quando visualizzo l'evento, finisce al giorno -1
+                                car: car,
+                                creator: creator,
+                                allDay: allDay,
+                            };
+                            console.log(eventData);
+                            calendar.addEvent(eventData);
+                            saveEvent(title, start, endVisual, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                        } else {
+                            alert('You must enter both times.');
+                        }
+                    } else {
                         var start = info.startStr;
                         var end = info.endStr;
-                        /*var start = info.startStr.split('T')[0] + 'T' + startTime;
-                        var end = info.endStr.split('T')[0] + 'T' + endTime;*/
                         var eventData = {
                             title: title,
                             start: start,
                             end: end,
                             car: car,
                             creator: creator,
+                            allDay: allDay,
                         };
                         console.log(eventData);
                         calendar.addEvent(eventData);
-                        saveEvent(title, start, end, car, creator); // Chiamata alla funzione ASP per salvare l'evento
-                    } else {
-                        alert('You must enter both times.'); //TODO: da mettere AllDay se non si mettono gli orari
+                        saveEvent(title, start, end, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
                     }
+                
                 }
             },
             eventClick: function(info) {
@@ -126,12 +154,12 @@ End If
             });
         }
 
-        function saveEvent(title, start, end, car, creator) {
+        function saveEvent(title, start, end, car, creator, allDay) {
             // Chiamata AJAX a uno script ASP per salvare l'evento nel database o in un file
             $.ajax({
                 url: 'save_event.asp',
                 type: 'POST',
-                data: { title: title, start: start, end: end, car: car, creator: creator },
+                data: { title: title, start: start, end: end, car: car, creator: creator, allDay: allDay},
                 success: function(response) {
                     console.log('Event saved');
                 },
@@ -160,16 +188,36 @@ End If
         }
 
         function showEventInfo(event) {
-            console.log(event.id);
+            console.log(event);
+            console.log(event.allDay);
             var infoItem = document.getElementById('event-info');
-            var html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
-            <button onclick="hideEventInfo()">Close</button></div>
-            <p><strong>Title:</strong> ${event.title} </p>
-            <p><strong>Car:</strong> ${event.extendedProps.car} </p>
-            <p><strong>Created by:</strong> ${event.extendedProps.creator} </p>
-            <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
-            <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
-            <button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+            var html;
+            /*if(event.allDay){
+                var start = event.start.toLocaleDateString();
+                var end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                var giorno = end.getDate();
+                end.setDate(giorno - 1);
+                end = end.toLocaleDateString();
+
+                html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+                <button onclick="hideEventInfo()">Close</button></div>
+                <p><strong>Title:</strong> ${event.title} </p>
+                <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+                <p><strong>Created by:</strong> ${event.extendedProps.creator} </p>`
+                if( start == end ) html += `<p><strong>Date:</strong> ${start} </p>`
+                else html += `<p><strong>Start:</strong> ${start} </p>
+                    <p><strong>End:</strong> ${end} </p>`
+                html += `<button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+            } else {*/
+                html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+                <button onclick="hideEventInfo()">Close</button></div>
+                <p><strong>Title:</strong> ${event.title} </p>
+                <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+                <p><strong>Created by:</strong> ${event.extendedProps.creator} </p>
+                <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
+                <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
+                <button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+            //}
             infoItem.innerHTML = html;
         }
 

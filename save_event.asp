@@ -5,6 +5,7 @@ start = Request.Form("start")
 endd = Request.Form("end")
 car = Request.Form("car")
 creator = Request.Form("creator")
+allDay =  Request.Form("allDay")
 
 ' Connessione al database
 Dim connString
@@ -15,7 +16,7 @@ conn.Open connString
 
 ' Inserimento dell'evento nel database
 Dim strSQL
-strSQL = "INSERT INTO events (Title, StartDate, EndDate, Car, CreatedBy) VALUES ('" & title & "', '" & start & "', '" & endd & "', '" & car & "', '" & creator & "')"
+strSQL = "INSERT INTO events (Title, StartDate, EndDate, Car, CreatedBy, allDay) VALUES ('" & title & "', '" & start & "', '" & endd & "', '" & car & "', '" & creator & "', '" & allDay & "')"
 conn.Execute(strSQL)
 
 ' Chiusura della connessione al database
