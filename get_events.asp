@@ -13,13 +13,13 @@ Set rsEvents = conn.Execute(strSQL)
 If Not rsEvents.EOF Then
     events = "[" ' Inizia l'array JSON
     Do While Not rsEvents.EOF
-        events = events & "{""id"":""" & rsEvents("id") & """, ""car"":""" & rsEvents("Car") & """, ""title"":""" & rsEvents("Title") & """, ""start"":""" & rsEvents("StartDate") & """, ""end"":""" & rsEvents("EndDate") & """, ""creator"":""" & rsEvents("CreatedBy") & """, ""allDay"":""false""}"
+        events = events & "{""id"":""" & rsEvents("id") & """, ""car"":""" & rsEvents("Car") & """, ""title"":""" & rsEvents("Title") & """, ""start"":""" & rsEvents("StartDate") & """, ""end"":""" & rsEvents("EndDate") & """, ""creator"":""" & rsEvents("CreatedBy") & """, "
         
-        'If rsEvents("allDay") = 0 Then 
-        '    events &= """allDay"":""false""}"
-        'Else 
-        '    events &= """allDay"":""true""}"
-        'End If
+        If rsEvents("allDay") = 0 Then 
+            events = events & """allDay"":false}"
+        Else 
+            events = events & """allDay"":true}"
+        End If
         
         rsEvents.MoveNext
         If Not rsEvents.EOF Then

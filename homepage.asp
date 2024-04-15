@@ -23,44 +23,51 @@ End If
 
     <script>
     function hideEventInfo() {
-        var infoItem = document.getElementById('event-info');
+        let infoItem = document.getElementById('event-info');
         infoItem.innerHTML = '<div class="event-title">Select an Event from the Calendar</div>'; // Svuota il contenuto del div delle informazioni dell'evento
     }
 
     
     function deleteEvent(id) {
-        if (confirm("Do you want to delete this event?")) {
-            $.ajax({
-                url: 'delete_event.asp',
-                type: 'POST',
-                data: { 
-                    id: id
-                },
-                success: function(response) {
-                    console.log('Event deleted');
-                    var calendar = $('#calendar').data('fullCalendarObj'); //retreive the object from data attr (IMPORTANTE!)
-                    var event = calendar.getEventById(id);
+        let calendar = $('#calendar').data('fullCalendarObj'); //retreive the object from data attr (IMPORTANTE!)
+        let event = calendar.getEventById(id);
+        if(event){ //TODO: non viene trovato l'id degli eventi appena creati
+            let isAdmin = "<%=Session("admin")%>" == "True" ? true : false;
+            let isCreator = event.extendedProps.creator == <%=Session("userID")%>; 
 
-                    // Verifica se l'evento esiste
-                    if (event) {
-                        // Rimuovi l'evento dal calendario
-                        event.remove();
-                        console.log('Event with ID ' + id + ' deleted successfully.');
-                    } else {
-                        console.error('Event with ID ' + id + ' not found.');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error deleting event:', error);
+            if (isAdmin || isCreator) {
+                if (confirm("Do you want to delete this event?")) {
+                    $.ajax({
+                        url: 'delete_event.asp',
+                        type: 'POST',
+                        data: { 
+                            id: id
+                        },
+                        success: function(response) {
+                            console.log('Event deleted');
+
+                            // Verifica se l'evento esiste
+                            if (event) {
+                                // Rimuovi l'evento dal calendario
+                                event.remove();
+                                console.log('Event with ID ' + id + ' deleted successfully.');
+                            } else {
+                                console.error('Event with ID ' + id + ' not found.');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error deleting event:', error);
+                        }
+                    });
                 }
-            });
-        }
+            } else alert("You don't have permission to delete this event!");
+        } else alert("You can't delete this event now, try reloading the page");
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
+        let calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        let calendar = new FullCalendar.Calendar(calendarEl, {
             defaultAllDay: false,
             initialView: 'dayGridMonth',
             headerToolbar: {
@@ -71,28 +78,28 @@ End If
             editable: true,
             selectable: true,
             select: function(info) {
-                var title = prompt('Insert event title:');
+                let title = prompt('Insert event title:');
                 if (title) {
-                    var creator = <%=Session("userID")%>;
-                    var car = prompt('Enter the Car model:');
-                    var answer = prompt("Do you want to rent the car for the whole day(s)?\nAnswer with 'yes' or 'no'", "yes");
+                    let creator = <%=Session("userID")%>;
+                    let car = prompt('Enter the Car model:');
+                    let answer = prompt("Do you want to rent the car for the whole day(s)?\nAnswer with 'yes' or 'no'", "yes");
                     answer = answer.toLowerCase();
-                    var allDay = (answer == 'yes') ? 1 : 0; //1 = true, 0 = false. in MySql there is no boolean :(
+                    let allDay = (answer == 'yes') ? 1 : 0; //1 = true, 0 = false. in MySql there is no boolean :(
                     if (allDay == 0){
-                        var startTime = prompt('Enter the start time (HH:mm):');
-                        var endTime = prompt('Enter the end time (HH:mm):');
+                        let startTime = prompt('Enter the start time (HH:mm):');
+                        let endTime = prompt('Enter the end time (HH:mm):');
 
                         if (startTime && endTime) {
-                            var start = info.startStr.split('T')[0] + 'T' + startTime;
-                            var end = info.endStr.split('T')[0] + 'T' + endTime;
+                            let start = info.startStr.split('T')[0] + 'T' + startTime;
+                            let end = info.endStr.split('T')[0] + 'T' + endTime;
                             console.log(start);
 
-                            var endVisual = new Date(info.endStr); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
-                            var giorno = endVisual.getDate();
+                            let endVisual = new Date(info.endStr); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                            let giorno = endVisual.getDate();
                             endVisual.setDate(giorno - 1);
-                            var endVisual = endVisual.toISOString().split('T')[0] + 'T' + endTime;
+                            endVisual = endVisual.toISOString().split('T')[0] + 'T' + endTime;
 
-                            var eventData = {
+                            let eventData = {
                                 title: title,
                                 start: start,
                                 end: endVisual, //quando visualizzo l'evento, finisce al giorno -1
@@ -107,9 +114,9 @@ End If
                             alert('You must enter both times.');
                         }
                     } else {
-                        var start = info.startStr;
-                        var end = info.endStr;
-                        var eventData = {
+                        let start = info.startStr;
+                        let end = info.endStr;
+                        let eventData = {
                             title: title,
                             start: start,
                             end: end,
@@ -129,6 +136,25 @@ End If
             },
             eventDrop: function(info) {
                 updateEvent(info.event);
+            },
+            eventAllow: function(dropInfo, draggedEvent) {
+                if(draggedEvent.id){ //TODO: non viene trovato l'id degli eventi appena creati
+                    // Verifica se l'utente è un admin
+                    console.log(draggedEvent);
+                    let isAdmin = "<%=Session("admin")%>" == "True" ? true : false; // Imposta questa variabile in base alla sessione dell'utente
+
+                    // Verifica se l'utente è l'organizzatore (creator) dell'evento
+                    let isCreator = draggedEvent.extendedProps.creator == <%=Session("userID")%>; // Imposta questa variabile in base alla sessione dell'utente
+
+                    // Consenti lo spostamento solo se l'utente è un admin o è l'organizzatore dell'evento
+                    if (!isAdmin && !isCreator) {
+                        return false; // Non consentire lo spostamento
+                    }
+
+                    return true; // Consenti lo spostamento
+                } else {
+                    return false;
+                }
             }
         });
 
@@ -170,6 +196,9 @@ End If
         }
 
         function updateEvent(event) {
+            console.log(event.id);
+            console.log(event.startStr); //TODO: forse agli eventi non allDay non piace come vengono scritti questi
+            console.log(event.endStr);
             $.ajax({
                 url: 'update_event.asp',
                 type: 'POST',
@@ -189,37 +218,69 @@ End If
 
         function showEventInfo(event) {
             console.log(event);
-            console.log(event.allDay);
-            var infoItem = document.getElementById('event-info');
-            var html;
-            /*if(event.allDay){
-                var start = event.start.toLocaleDateString();
-                var end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
-                var giorno = end.getDate();
-                end.setDate(giorno - 1);
-                end = end.toLocaleDateString();
+            let infoItem = document.getElementById('event-info');
+            let html;
 
-                html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
-                <button onclick="hideEventInfo()">Close</button></div>
-                <p><strong>Title:</strong> ${event.title} </p>
-                <p><strong>Car:</strong> ${event.extendedProps.car} </p>
-                <p><strong>Created by:</strong> ${event.extendedProps.creator} </p>`
-                if( start == end ) html += `<p><strong>Date:</strong> ${start} </p>`
-                else html += `<p><strong>Start:</strong> ${start} </p>
-                    <p><strong>End:</strong> ${end} </p>`
-                html += `<button onclick="deleteEvent( ${event.id} )">Delete</button>`;
-            } else {*/
-                html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
-                <button onclick="hideEventInfo()">Close</button></div>
-                <p><strong>Title:</strong> ${event.title} </p>
-                <p><strong>Car:</strong> ${event.extendedProps.car} </p>
-                <p><strong>Created by:</strong> ${event.extendedProps.creator} </p>
-                <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
-                <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
-                <button onclick="deleteEvent( ${event.id} )">Delete</button>`;
-            //}
-            infoItem.innerHTML = html;
+            let userID = event.extendedProps.creator ? event.extendedProps.creator : 0;
+            let username;
+            
+            getUsername(userID)
+                .then(function(result) {
+                    username = result; // Salva l'username nella variabile
+
+                    if(event.allDay){
+                        let start = event.start.toLocaleDateString();
+                        let end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                        let giorno = end.getDate();
+                        end.setDate(giorno - 1);
+                        end = end.toLocaleDateString();
+
+                        html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+                        <button onclick="hideEventInfo()">Close</button></div>
+                        <p><strong>Title:</strong> ${event.title} </p>
+                        <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+                        <p><strong>Created by:</strong> ${username} </p>`
+                        if( start == end ) html += `<p><strong>Date:</strong> ${start} </p>`
+                        else html += `<p><strong>Start:</strong> ${start} </p>
+                            <p><strong>End:</strong> ${end} </p>`
+                        html += `<button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                    } else {
+                        html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+                        <button onclick="hideEventInfo()">Close</button></div>
+                        <p><strong>Title:</strong> ${event.title} </p>
+                        <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+                        <p><strong>Created by:</strong> ${username} </p>
+                        <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
+                        <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
+                        <button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                    }
+                    infoItem.innerHTML = html;
+
+            })
+            .catch(function(error) {
+                $("#risultato").text("Si è verificato un errore durante la ricerca dell'username.");
+            });
         }
+
+        function getUsername(userID) {
+            return new Promise(function(resolve, reject) {
+                let url = "find_username.asp?id=" + userID;
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(response) {
+                        let username = response; // Salva l'username nella variabile
+                        resolve(username); // Risolvi la promessa con l'username
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('An error occurred:', error);
+                        reject(error); // Rifiuta la promessa con l'errore
+                    }
+                });
+            });
+        }
+
 
     });
     </script>
