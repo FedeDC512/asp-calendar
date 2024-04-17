@@ -12,6 +12,7 @@ End If
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruby Rhino Rentals - Profile</title>
+    <link rel="icon" type="image/svg" href="rhino.svg">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -36,6 +37,7 @@ End If
                     html += 'ID: ' + events[i].id + '\n';
                     html += 'Title: ' + events[i].title + '\n';
                     html += 'Car: ' + events[i].car + '\n';
+                    html += '<img class="car-profile" src="cars/'+events[i].car+'.png" alt="'+events[i].car+'">\n'
                     html += 'All Day: ' + events[i].allDay + '\n';
 
                     if(events[i].allDay){
@@ -84,7 +86,7 @@ End If
         %><br>
 
 
-        <a href="index.asp?action=logout">Logout</a>
+        <button><a href="index.asp?action=logout" class="logout">Logout</a></button>
     </div>
 
     <div class="small-page-title stick-regular">Your car bookings</div>

@@ -11,6 +11,7 @@ End If
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="rhino.svg">
     <title>Ruby Rhino Rentals</title>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -256,6 +257,7 @@ End If
                         <button onclick="hideEventInfo()">Close</button></div>
                         <p><strong>Title:</strong> ${event.title} </p>
                         <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+                        <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
                         <p><strong>Created by:</strong> ${username} </p>
                         <p><strong>All Day:</strong> ${event.allDay} </p>`
                         if( start == end ) html += `<p><strong>Date:</strong> ${start} </p>`
@@ -267,6 +269,7 @@ End If
                         <button onclick="hideEventInfo()">Close</button></div>
                         <p><strong>Title:</strong> ${event.title} </p>
                         <p><strong>Car:</strong> ${event.extendedProps.car} </p>
+                        <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
                         <p><strong>Created by:</strong> ${username} </p>
                         <p><strong>All Day:</strong> ${event.allDay} </p>
                         <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
@@ -313,7 +316,9 @@ End If
     </div>
     <div class="info-column">
         <div class="event-info">
-            <div class="event-title">Calendar Tutorial:</div>
+            <div class="event-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
+            Calendar Tutorial:</div>
             <p>Here are some basic instructions on how to use the calendar:</p>
             <ul>
                 <li><strong>To Add Events:</strong> Click on a day to select it, then fill out the event details in the prompt.</li>

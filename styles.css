@@ -4,6 +4,7 @@ body {
     font-family: serif;
     font-optical-sizing: auto;
     font-style: normal;
+    background-color: #F5F5F5;
 }
 
 .stick-regular {
@@ -42,6 +43,11 @@ body {
 
   .rhino{
     color: #531319;  
+    font-size: 2.5rem;
+  }
+
+  .login-rhino {
+    color: #FE4C6F;
     font-size: 2.5rem;
   }
   
@@ -87,8 +93,8 @@ body {
 
   .event-profile-info{
     margin: 1rem 1rem;
-    height: 6rem;
-    min-width: 12rem;
+    height: 14rem;
+    width: 14rem;
   }
 
   .event-list{
@@ -104,6 +110,8 @@ body {
   .event-title{
     font-weight: bold;
     font-size: large;
+    display: flex;
+    gap: 1rem;
   }
 
   .small-page-title{
@@ -119,18 +127,22 @@ body {
   .login-container{
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 2rem;
+    gap: 5rem;
   }
 
   .login-box{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap:1.5rem;
     padding: 2rem;
     border-radius: 1rem;
     background-color: #FE4C6F;
-    min-width: 15rem;
+    max-width: 15rem;
+    max-height: 13rem;
   }
 
   .form{
@@ -141,4 +153,35 @@ body {
 
   .login-title{
     font-weight: bold;
+  }
+
+  .family {
+    height:32rem;
+    border-radius: 1rem;
+  }
+
+  .login-text {
+    width: 28rem;
+    font-size: x-large;
+  }
+
+  .vertical-login {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .car-calendar{
+    height: 13rem;
+    margin: 0rem 1rem;
+  }
+
+  .car-profile{
+    height: 5rem;
+    margin: 1rem;
+  }
+
+  .logout {
+    text-decoration: none;
+    color: black;
   }
