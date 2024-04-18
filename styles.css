@@ -185,3 +185,71 @@ body {
     text-decoration: none;
     color: black;
   }
+  .cars-card-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .car-card{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 25rem;
+
+    background: #fafafa;
+    border: 1px solid white;
+    box-shadow: 3px 3px 9px hsla(240, 14%, 69%, 0.2);
+  }
+
+  .car-list-img{
+    height: 13rem;
+  }
+  .car-list-img-container{ 
+    display: flex;
+    justify-content: center;
+  }
+
+  .car-name{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .car-info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: gray;
+    gap: 1rem;
+    border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);
+    padding-bottom: 1rem;
+  }
+
+  li{
+    list-style: none;
+  }
+
+  ul{
+    padding: 0rem;
+    margin: 0rem;
+  }
+
+  .price-text{
+
+  }
+
+  .car-title-text{
+    font-size: x-large;
+  }
+
+  .car-feature{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .rhino-red{
+    color: #FE4C6F;
+  }
