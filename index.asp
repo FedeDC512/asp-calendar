@@ -67,6 +67,7 @@ End If
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
 </head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
     <div class="login-container">
         <div class="vertical-login">

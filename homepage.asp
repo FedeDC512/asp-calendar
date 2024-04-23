@@ -20,7 +20,7 @@ End If
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script>
     function hideEventInfo() {
@@ -248,10 +248,14 @@ End If
 
                     if(event.allDay){
                         let start = event.start.toLocaleDateString();
-                        let end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
-                        let giorno = end.getDate();
-                        end.setDate(giorno - 1);
-                        end = end.toLocaleDateString();
+                        let end = null;
+                        if(event.end != null){
+                            end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                            let giorno = end.getDate();
+                            end.setDate(giorno - 1);
+                            end = end.toLocaleDateString();
+                        }
+                        console.log(end);
 
                         html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
                         <button onclick="hideEventInfo()">Close</button></div>
@@ -260,7 +264,7 @@ End If
                         <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
                         <p><strong>Created by:</strong> ${username} </p>
                         <p><strong>All Day:</strong> ${event.allDay} </p>`
-                        if( start == end ) html += `<p><strong>Date:</strong> ${start} </p>`
+                        if( end == null ) html += `<p><strong>Date:</strong> ${start} </p>`
                         else html += `<p><strong>Start:</strong> ${start} </p>
                             <p><strong>End:</strong> ${end} </p>`
                         html += `<button onclick="deleteEvent( ${event.id} )">Delete</button>`;
@@ -318,12 +322,12 @@ End If
         <div class="event-info">
             <div class="event-title">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
-            Calendar Tutorial:</div>
+            Calendar Tutorial</div>
             <p>Here are some basic instructions on how to use the calendar:</p>
             <ul>
-                <li><strong>To Add Events:</strong> Click on a day to select it, then fill out the event details in the prompt.</li>
-                <li><strong>To Move Events:</strong> Click and drag an event to a new time or date.</li>
-                <li><strong>To Delete Events:</strong> Click on an event and select "Delete" from the info menu.</li>
+                <li><strong>To Add Events:</strong> Click on a day to select it, or hold to select multiple days, then fill in the event details by entering start and end times and choosing one of <a href="cars.asp">our available cars</a>.</li>
+                <li><strong>To Move Events:</strong> Click and drag an event to a new time or date. You can only move events created by you. Only admins can move any event.</li>
+                <li><strong>To Delete Events:</strong> Click on an event and select "Delete" from the info menu. You can only delete events created by you. Only admins can delete any event.</li>
             </ul>
         </div>
         <div class="event-info" id="event-info">

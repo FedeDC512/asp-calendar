@@ -18,12 +18,21 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #FE4C6F;
+
+    position: sticky;
+    top: 0;
+    z-index: 9999;
   }
 
-  .homepage-title {
+  .homepage-title, .homepage-title-mobile {
     color: #531319;
     font-size: xx-large;
-}
+  }
+
+  .homepage-title-mobile{
+    display: none;
+    font-size: x-large;
+  }
   
   .h-logoname{
     display: flex;
@@ -76,8 +85,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 50%;
-    margin: 2rem 1rem;
-    gap: 1rem;
+    margin: 1rem;
   }
 
   .event-info, .profile-info, .event-profile-info {
@@ -87,8 +95,14 @@ body {
     border-radius: 5px;
   }
 
+  .profile-info-container{
+    display: flex;
+    justify-content: center;
+  }
+
   .profile-info{
-    margin: 2rem 25rem;
+    margin: 2rem;
+    width: 37.5rem;
   }
 
   .event-profile-info{
@@ -100,6 +114,7 @@ body {
   .event-list{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .event-item-bar{
@@ -128,6 +143,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     margin: 2rem;
     gap: 5rem;
   }
@@ -190,6 +206,7 @@ body {
     flex-wrap: wrap;
     padding: 2rem;
     gap: 2rem;
+    justify-content: center;
   }
 
   .car-card{
@@ -235,11 +252,7 @@ body {
     padding: 0rem;
     margin: 0rem;
   }
-
-  .price-text{
-
-  }
-
+  
   .car-title-text{
     font-size: x-large;
   }
@@ -252,4 +265,81 @@ body {
 
   .rhino-red{
     color: #FE4C6F;
+  }
+
+  @media only screen and (max-width: 768px){
+
+    .homepage-title{
+      display: none;
+    }
+
+    .homepage-title-mobile{
+      display: block;
+    }
+
+    .homepage-division{
+      display: block;
+    }
+
+    .info-column{
+      width: 100%;
+      margin: 0rem;
+      flex-direction: column-reverse;
+    }
+
+    .event-list{
+      justify-content: center;
+    }
+
+    .car-calendar{
+      width: 80%;
+      height: auto;
+    }
+
+    .car-card{
+      width: 100%;
+    }
+
+    .car-list-img{
+      width: 80%;
+      height: auto;
+    }
+
+    .login-container{
+      flex-direction: column;
+      gap: 2rem;
+      flex-direction: column-reverse;
+    }
+
+    .family{
+      width: 100%;
+      height: auto;
+    }
+
+    .login-text{
+      width: 100%;
+      font-size: large;
+    }
+
+    .login-box{
+      width: 80%;
+    }
+
+    .vertical-login{
+      align-items: center;
+    }
+
+    .calendar-column{
+      width: 90%;
+      height: auto;
+    }
+
+    .fc-view{
+      height: 25rem;
+    }
+
+    #calendar{
+      margin-bottom: 7rem;
+    }
+
   }

@@ -20,7 +20,7 @@ End If
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
     $(document).ready(function() {
         $.ajax({
@@ -76,17 +76,18 @@ End If
 
 <body>
     <!--#include file="header.asp"-->
+    <div class="profile-info-container">
+        <div class="profile-info">
+            <div class="event-title"><%=Session("username")%>' Profile:</div><br>
+            <%dim i
+            For Each i in Session.Contents
+            Response.Write(i & ": " & Session.Contents(i) & "<br>")
+            Next
+            %><br>
 
-    <div class="profile-info">
-        <div class="event-title"><%=Session("username")%>' Profile:</div><br>
-        <%dim i
-        For Each i in Session.Contents
-        Response.Write(i & ": " & Session.Contents(i) & "<br>")
-        Next
-        %><br>
 
-
-        <button><a href="index.asp?action=logout" class="logout">Logout</a></button>
+            <button><a href="index.asp?action=logout" class="logout">Logout</a></button>
+        </div>
     </div>
 
     <div class="small-page-title stick-regular">Your car bookings</div>
