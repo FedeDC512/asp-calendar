@@ -3,9 +3,14 @@ Dim conn
 Set conn = Server.CreateObject("ADODB.Connection")
 conn.Open "Driver={MySQL ODBC 3.51 Driver};Server=localhost;Database=federico;Uid=federico;Pwd=agnello;"
 
+
+Dim numCarsToLoad, currentCarPage
+numCarsToLoad = Request.QueryString("numCarsToLoad")
+currentCarPage = Request.QueryString("currentCarPage")
+
 ' Query per selezionare tutte le macchine
 Dim strSQL
-strSQL = "SELECT * FROM cars"
+strSQL = "SELECT * FROM cars LIMIT "& (numCarsToLoad * currentCarPage) &", "& numCarsToLoad
 Set rs = conn.Execute(strSQL)
 
 ' Creazione di un oggetto JSON per contenere i dati delle macchine

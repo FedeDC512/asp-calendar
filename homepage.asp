@@ -199,14 +199,14 @@ End If
         function updateEvent(event) {
 
             //a FullCalendar non vanno bene le date con il fuso orario, quindi lo rimuovo dalle stringhe event.startStr e event.endStr
-            var dateWithTimeZone = new Date(event.startStr);
-            var year = dateWithTimeZone.getFullYear();
-            var month = ('0' + (dateWithTimeZone.getMonth() + 1)).slice(-2); // Aggiungi 1 al mese perché i mesi in JavaScript partono da zero
-            var day = ('0' + dateWithTimeZone.getDate()).slice(-2);
-            var hours = ('0' + dateWithTimeZone.getHours()).slice(-2);
-            var minutes = ('0' + dateWithTimeZone.getMinutes()).slice(-2);
-            var seconds = ('0' + dateWithTimeZone.getSeconds()).slice(-2);
-            var startWithoutTimeZone = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
+            let dateWithTimeZone = new Date(event.startStr);
+            let year = dateWithTimeZone.getFullYear();
+            let month = ('0' + (dateWithTimeZone.getMonth() + 1)).slice(-2); // Aggiungi 1 al mese perché i mesi in JavaScript partono da zero
+            let day = ('0' + dateWithTimeZone.getDate()).slice(-2);
+            let hours = ('0' + dateWithTimeZone.getHours()).slice(-2);
+            let minutes = ('0' + dateWithTimeZone.getMinutes()).slice(-2);
+            let seconds = ('0' + dateWithTimeZone.getSeconds()).slice(-2);
+            let startWithoutTimeZone = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
 
             dateWithTimeZone = new Date(event.endStr);
             year = dateWithTimeZone.getFullYear();
@@ -215,7 +215,7 @@ End If
             hours = ('0' + dateWithTimeZone.getHours()).slice(-2);
             minutes = ('0' + dateWithTimeZone.getMinutes()).slice(-2);
             seconds = ('0' + dateWithTimeZone.getSeconds()).slice(-2);
-            var endWithoutTimeZone = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
+            let endWithoutTimeZone = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
 
             $.ajax({
                 url: 'update_event.asp',

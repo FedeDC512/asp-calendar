@@ -1,0 +1,3 @@
+[submodule "ASPMD5"]
+	path = ASPMD5
+	url = git@github.com:Centurix/ASPMD5.git

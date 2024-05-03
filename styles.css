@@ -267,6 +267,17 @@ body {
     color: #FE4C6F;
   }
 
+  .login-box-title{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .error-message{
+    font-weight: bold;
+    color: #F5F5F5;
+  }
+
   @media only screen and (max-width: 768px){
 
     .homepage-title{
@@ -340,6 +351,11 @@ body {
 
     #calendar{
       margin-bottom: 7rem;
+    }
+
+    .login-box-title{
+      flex-direction: column;
+      gap: 2rem;
     }
 
   }
