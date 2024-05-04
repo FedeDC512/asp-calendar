@@ -28,6 +28,26 @@ End If
         infoItem.innerHTML = '<div class="event-title">Select an Event from the Calendar</div>'; // Svuota il contenuto del div delle informazioni dell'evento
     }
 
+    function keepSessionAlive() {
+        setInterval(function() {
+            $.ajax({
+                url: 'keep_session_alive.asp',
+                type: 'GET',
+                success: function(response) {
+                    //console.log('Session maintained active');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error while maintaining the session:', status, error);
+                }
+            });
+        }, 30000); // 30 secondi
+    }
+    // Avvia il mantenimento della sessione al caricamento della pagina
+    $(document).ready(function() {
+        keepSessionAlive();
+    });
+
+
     
     function deleteEvent(id) {
         let calendar = $('#calendar').data('fullCalendarObj'); //retreive the object from data attr (IMPORTANTE!)
@@ -248,14 +268,12 @@ End If
 
                     if(event.allDay){
                         let start = event.start.toLocaleDateString();
-                        let end = null;
-                        if(event.end != null){
-                            end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
-                            let giorno = end.getDate();
-                            end.setDate(giorno - 1);
-                            end = end.toLocaleDateString();
-                        }
-                        console.log(end);
+
+                        let end = new Date(event.end); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                        let giorno = end.getDate();
+                        end.setDate(giorno - 1);
+                        end = end.toLocaleDateString();
+                        console.log(start + " - " + end);
 
                         html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
                         <button onclick="hideEventInfo()">Close</button></div>
@@ -264,11 +282,13 @@ End If
                         <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
                         <p><strong>Created by:</strong> ${username} </p>
                         <p><strong>All Day:</strong> ${event.allDay} </p>`
-                        if( end == null ) html += `<p><strong>Date:</strong> ${start} </p>`
+                        if( end == start ) html += `<p><strong>Date:</strong> ${start} </p>`
                         else html += `<p><strong>Start:</strong> ${start} </p>
                             <p><strong>End:</strong> ${end} </p>`
                         html += `<button onclick="deleteEvent( ${event.id} )">Delete</button>`;
                     } else {
+                        console.log(event.start.toLocaleString() + " - " + event.end.toLocaleString());
+
                         html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
                         <button onclick="hideEventInfo()">Close</button></div>
                         <p><strong>Title:</strong> ${event.title} </p>

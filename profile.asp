@@ -22,6 +22,25 @@ End If
     <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
+    function keepSessionAlive() {
+        setInterval(function() {
+            $.ajax({
+                url: 'keep_session_alive.asp',
+                type: 'GET',
+                success: function(response) {
+                    //console.log('Session maintained active');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error while maintaining the session:', status, error);
+                }
+            });
+        }, 30000); // 30 secondi
+    }
+    // Avvia il mantenimento della sessione al caricamento della pagina
+    $(document).ready(function() {
+        keepSessionAlive();
+    });
+
     $(document).ready(function() {
         $.ajax({
             url: 'user_events.asp',
