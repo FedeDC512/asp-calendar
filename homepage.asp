@@ -17,9 +17,9 @@ End If
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="stylesheet" href="styles.css" type="text/css" >
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Stick&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script>
@@ -276,7 +276,7 @@ End If
                         console.log(start + " - " + end);
 
                         html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
-                        <button onclick="hideEventInfo()">Close</button></div>
+                        <button class="bootstrap-btn-2" onclick="hideEventInfo()">Close</button></div>
                         <p><strong>Title:</strong> ${event.title} </p>
                         <p><strong>Car:</strong> ${event.extendedProps.car} </p>
                         <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
@@ -285,12 +285,12 @@ End If
                         if( end == start ) html += `<p><strong>Date:</strong> ${start} </p>`
                         else html += `<p><strong>Start:</strong> ${start} </p>
                             <p><strong>End:</strong> ${end} </p>`
-                        html += `<button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                        html += `<button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
                     } else {
                         console.log(event.start.toLocaleString() + " - " + event.end.toLocaleString());
 
                         html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
-                        <button onclick="hideEventInfo()">Close</button></div>
+                        <button class="bootstrap-btn-2" onclick="hideEventInfo()">Close</button></div>
                         <p><strong>Title:</strong> ${event.title} </p>
                         <p><strong>Car:</strong> ${event.extendedProps.car} </p>
                         <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
@@ -298,7 +298,7 @@ End If
                         <p><strong>All Day:</strong> ${event.allDay} </p>
                         <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
                         <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
-                        <button onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                        <button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
                     }
                     infoItem.innerHTML = html;
 
