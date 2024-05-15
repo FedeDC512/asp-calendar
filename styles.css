@@ -361,6 +361,36 @@ body {
     justify-content: center;
     gap:1.5rem;
   }
+
+  .sign-up-container{
+    flex-direction: row-reverse;
+  }
+
+  .login .sign-up-col-left{
+    clip-path: polygon(0 0, 100% 100%, 100% 0);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .login .sign-up-col-right{
+    margin-right: -10%;
+    margin-left: auto;
+  }
+
+  .sign-up-col-left-inside{
+    text-align: right;
+  }
+
+  .hidden, .login .hidden {
+    display: none;
+  }
+
+  .show-flex{
+    display: flex !important;
+  }
+  
+  
+
     
 
   @media only screen and (max-width: 768px){
