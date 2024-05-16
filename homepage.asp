@@ -99,6 +99,7 @@ End If
             editable: true,
             selectable: true,
             select: function(info) {
+                /*
                 let title = prompt('Insert event title:');
                 if (title) {
                     let creator = <%=Session("userID")%>;
@@ -150,7 +151,12 @@ End If
                         saveEvent(title, start, end, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
                     }
                 
-                }
+                }*/
+                var modal = document.getElementById('calendarModal');
+                var form = document.getElementById("eventForm");
+
+                modal.style.display = "block";
+
             },
             eventClick: function(info) {
                 showEventInfo(info.event);
@@ -339,10 +345,30 @@ End If
         <div id='calendar'></div>
     </div>
     <div class="info-column">
-        <div class="event-info">
-            <div class="event-title">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
-            Calendar Tutorial</div>
+    <div class="btn-tutorial-container">
+        <button id="openTutorialModal" class="bootstrap-btn-2">
+            <div class="modal-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
+                Calendar Tutorial
+            </div>
+        </button>
+    </div>
+        <div class="event-info" id="event-info">
+            <div class="event-title">Select an Event from the Calendar</div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-top-margin">
+        <div class="modal-content">
+            <div class="modal-title">
+                <div class="event-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
+                Calendar Tutorial</div>
+                <span class="close">&times;</span>
+            </div>
             <p>Here are some basic instructions on how to use the calendar:</p>
             <ul>
                 <li><strong>To Add Events:</strong> Click on a day to select it, or hold to select multiple days, then fill in the event details by entering start and end times and choosing one of <a href="cars.asp">our available cars</a>.</li>
@@ -350,12 +376,117 @@ End If
                 <li><strong>To Delete Events:</strong> Click on an event and select "Delete" from the info menu. You can only delete events created by you. Only admins can delete any event.</li>
             </ul>
         </div>
-        <div class="event-info" id="event-info">
-            <div class="event-title">Select an Event from the Calendar</div>
-        </div>
-
     </div>
 </div>
+
+<div id="calendarModal" class="modal">
+  <div class="modal-content">
+  
+    <div class="modal-title modal-form-title">
+        <div class="event-title">Fill in the new event info:</div>
+        <span class="close">&times;</span>
+    </div>
+
+    <form id="eventForm" class="form">
+        <div class="small-form">
+            <label for="title">Event Title <span>*</span></label>
+            <input class="bootstrap-form" type="text" id="title" placeholder="Event Title" required>
+        </div>
+        <div class="small-form">
+            <label for="car">Car Model <span>*</span></label>
+            <input class="bootstrap-form" type="text" id="car" placeholder="Car Model" required>
+        </div>
+        <div>
+            <label for="allDay">Rent for Whole Day? <span>*</span></label><br>
+            <input type="radio" id="allDayYes" name="allDay" value="yes" required checked>
+            <label for="allDayYes">Yes</label>
+            <input type="radio" id="allDayNo" name="allDay" value="no" required>
+            <label for="allDayNo">No</label>
+        </div>
+
+      <div id="timeFields" style="display: none;">
+        <div class="small-form">
+            <label for="startTime">Start Time</label>
+            <input class="bootstrap-form" type="time" id="startTime" value="09:00">
+        </div>
+        <div class="small-form">
+            <label for="endTime">End Time</label>
+            <input class="bootstrap-form" type="time" id="endTime" value="18:00">
+        </div>
+      </div>
+
+      <button type="submit" class="bootstrap-btn-1">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script>
+var modals = document.querySelectorAll('.modal');
+var tutorialBtn = document.getElementById("openTutorialModal");
+var form = document.getElementById("eventForm");
+
+tutorialBtn.onclick = function() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+}
+
+modals.forEach(function(modal) {
+  var closeButton = modal.querySelector('.close');
+
+  closeButton.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+});
+
+//Calendar Event Modal
+document.getElementById("allDayYes").addEventListener("change", function() {
+  document.getElementById("timeFields").style.display = "none";
+});
+
+document.getElementById("allDayNo").addEventListener("change", function() {
+  document.getElementById("timeFields").style.display = "flex";
+});
+
+/* TODO: da rivedere
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  var title = document.getElementById("title").value;
+  var car = document.getElementById("car").value;
+  var allDay = document.getElementById("allDay").value === "yes" ? 1 : 0;
+  var startTime = document.getElementById("startTime").value;
+  var endTime = document.getElementById("endTime").value;
+  var creator = <%=Session("userID")%>;
+
+  // Validazione dei campi e gestione dei dati
+  if (title && car) {
+    if (allDay === 0 && startTime && endTime) {
+      // Fai qualcosa con i dati
+      console.log("Title:", title);
+      console.log("Car:", car);
+      console.log("Rent for Whole Day:", allDay);
+      console.log("Start Time:", startTime);
+      console.log("End Time:", endTime);
+    } else if (allDay === 1) {
+      // Fai qualcosa con i dati
+      console.log("Title:", title);
+      console.log("Car:", car);
+      console.log("Rent for Whole Day:", allDay);
+    } else {
+      alert("Please fill in all fields.");
+    }
+  } else {
+    alert("Please fill in all fields.");
+  }
+
+  modal.style.display = "none"; // Chiudi il modale dopo l'invio del modulo
+});*/
+</script>
 
 </body>
 </html>
