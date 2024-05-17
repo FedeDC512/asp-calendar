@@ -99,63 +99,121 @@ End If
             editable: true,
             selectable: true,
             select: function(info) {
-                /*
-                let title = prompt('Insert event title:');
-                if (title) {
-                    let creator = <%=Session("userID")%>;
-                    let car = prompt('Enter the Car model:');
-                    let answer = prompt("Do you want to rent the car for the whole day(s)?\nAnswer with 'yes' or 'no'", "yes");
-                    answer = answer.toLowerCase();
-                    let allDay = (answer == 'yes') ? 1 : 0; //1 = true, 0 = false. in MySql there is no boolean :(
+
+                let modal = document.getElementById('calendarModal');
+                modal.style.display = "block";
+
+                let endVisual = new Date(info.endStr); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
+                let giorno = endVisual.getDate();
+                endVisual.setDate(giorno - 1);
+                endVisual = endVisual.toISOString().split('T')[0];
+
+                if(info.startStr != endVisual){
+                    document.getElementById('endDateField').style.display = 'flex';
+                    document.getElementById('multipleDays').checked = true;
+                }
+
+                document.getElementById('startDate').value = info.startStr;
+                document.getElementById('endDate').value = endVisual;
+
+                form.addEventListener('submit', function(event) { //funzione che aggunge al tasto Submit la funzione per inviare i dati
+                    event.preventDefault();
+
+                    var title = document.getElementById("title").value;
+                    var car = document.getElementById("car").value;
+
+                    var multipleDays;
+                    if (document.getElementById("oneDay").checked) multipleDays = 0;
+                    else if (document.getElementById("multipleDays").checked) multipleDays = 1;
+
+                    var startDate = document.getElementById("startDate").value;
+                    var endDate = document.getElementById("endDate").value;
+
+                    var allDay;
+                    if (document.getElementById("allDayYes").checked) allDay = 1;
+                    else if (document.getElementById("allDayNo").checked) allDay = 0;
+
+                    var startTime = document.getElementById("startTime").value;
+                    var endTime = document.getElementById("endTime").value;
+
+                    var creator = <%=Session("userID")%>;
+
+                    let eventData;
                     if (allDay == 0){
-                        let startTime = prompt('Enter the start time (HH:mm):');
-                        let endTime = prompt('Enter the end time (HH:mm):');
+                        if(multipleDays == 0) endDate = startDate;
 
-                        if (startTime && endTime) {
-                            let start = info.startStr.split('T')[0] + 'T' + startTime;
-                            let end = info.endStr.split('T')[0] + 'T' + endTime;
-                            console.log(start);
+                        startDate = startDate + 'T' + startTime;
+                        endDate = endDate + 'T' + endTime;
 
-                            let endVisual = new Date(info.endStr); //tolgo un giorno (end - 1 giorno) perchè FullCalendar visualizza la fine nel giorno successivo (non so perchè)
-                            let giorno = endVisual.getDate();
-                            endVisual.setDate(giorno - 1);
-                            endVisual = endVisual.toISOString().split('T')[0] + 'T' + endTime;
-
-                            let eventData = {
-                                title: title,
-                                start: start,
-                                end: endVisual, //quando visualizzo l'evento, finisce al giorno -1
-                                car: car,
-                                creator: creator,
-                                allDay: allDay,
-                            };
-                            console.log(eventData);
-                            calendar.addEvent(eventData);
-                            saveEvent(title, start, endVisual, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
-                        } else {
-                            alert('You must enter both times.');
-                        }
-                    } else {
-                        let start = info.startStr;
-                        let end = info.endStr;
-                        let eventData = {
+                        eventData = {
                             title: title,
-                            start: start,
-                            end: end,
                             car: car,
+                            start: startDate,
+                            end: endDate,
                             creator: creator,
                             allDay: allDay,
+                            multipleDays: multipleDays,
+                        };
+
+                        console.log(eventData);
+                        calendar.addEvent(eventData);
+                        saveEvent(title, startDate, endDate, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                    } else if (allDay == 1 && multipleDays == 0){ //caso in cui selezioni più giorni dal calendario, ma con il modal metti in seguito un solo giorno
+                        endDate = new Date(startDate); 
+                        giorno = endDate.getDate();
+                        endDate.setDate(giorno + 1);
+                        endDate = endDate.toISOString().split('T')[0];
+                        
+                        eventData = {
+                            title: title,
+                            car: car,
+                            start: startDate,
+                            end: endDate,
+                            creator: creator,
+                            allDay: allDay,
+                            multipleDays: multipleDays,
                         };
                         console.log(eventData);
                         calendar.addEvent(eventData);
-                        saveEvent(title, start, end, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                        saveEvent(title, startDate, endDate, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                    
+                    } /*else if (info.endStr == startDate && multipleDays == 1){ //caso in cui selezioni un giorno dal calendario, ma con il modal metti in seguito più giorni
+                        endDate = new Date(startDate); 
+                        giorno = endDate.getDate();
+                        endDate.setDate(giorno + 1);
+                        endDate = endDate.toISOString().split('T')[0];
+                        
+                        eventData = {
+                            title: title,
+                            car: car,
+                            start: startDate,
+                            end: endDate,
+                            creator: creator,
+                            allDay: allDay,
+                            multipleDays: multipleDays,
+                        };
+                        console.log(eventData);
+                        calendar.addEvent(eventData);
+                        saveEvent(title, startDate, endDate, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                    
+                    } */else {
+                        eventData = {
+                            title: title,
+                            car: car,
+                            start: startDate,
+                            end: info.endStr, //negli eventi allDay la data di fine è giusta
+                            creator: creator,
+                            allDay: allDay,
+                            multipleDays: multipleDays,
+                        };
+                        
+                        console.log(eventData);
+                        calendar.addEvent(eventData);
+                        saveEvent(title, startDate, info.endStr, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
                     }
-                
-                }*/
-                var modal = document.getElementById('calendarModal');
-                var form = document.getElementById("eventForm");
 
-                modal.style.display = "block";
+                    modal.style.display = "none"; // Chiudi il modale dopo l'invio del modulo
+                    });
 
             },
             eventClick: function(info) {
@@ -397,23 +455,40 @@ End If
             <input class="bootstrap-form" type="text" id="car" placeholder="Car Model" required>
         </div>
         <div>
-            <label for="allDay">Rent for Whole Day? <span>*</span></label><br>
+            <label for="rentDuration">Rent Duration <span>*</span></label><br>
+            <input type="radio" id="oneDay" name="rentDuration" value="oneDay" required checked>
+            <label for="oneDay">One Day</label>
+            <input type="radio" id="multipleDays" name="rentDuration" value="multipleDays" required>
+            <label for="multipleDays">Multiple Days</label>
+        </div>
+        <div style="display: flex;gap: 1rem;">
+            <div class="small-form">
+                <label for="startDate">Start Date <span>*</span></label>
+                <input class="bootstrap-form" type="date" id="startDate" required>
+            </div>
+            <div class="small-form" id="endDateField" style="display: none;">
+                <label for="endDate">End Date</label>
+                <input class="bootstrap-form" type="date" id="endDate">
+            </div>
+        </div>
+        <div>
+            <label for="allDay">Rent for Whole Day(s)? <span>*</span></label><br>
             <input type="radio" id="allDayYes" name="allDay" value="yes" required checked>
             <label for="allDayYes">Yes</label>
             <input type="radio" id="allDayNo" name="allDay" value="no" required>
             <label for="allDayNo">No</label>
         </div>
 
-      <div id="timeFields" style="display: none;">
-        <div class="small-form">
-            <label for="startTime">Start Time</label>
-            <input class="bootstrap-form" type="time" id="startTime" value="09:00">
+        <div id="timeFields" style="display: none;gap: 1rem;">
+            <div class="small-form">
+                <label for="startTime">Start Time</label>
+                <input class="bootstrap-form" type="time" id="startTime" value="09:00">
+            </div>
+            <div class="small-form">
+                <label for="endTime">End Time</label>
+                <input class="bootstrap-form" type="time" id="endTime" value="18:00">
+            </div>
         </div>
-        <div class="small-form">
-            <label for="endTime">End Time</label>
-            <input class="bootstrap-form" type="time" id="endTime" value="18:00">
-        </div>
-      </div>
 
       <button type="submit" class="bootstrap-btn-1">Submit</button>
     </form>
@@ -445,47 +520,24 @@ modals.forEach(function(modal) {
 });
 
 //Calendar Event Modal
+document.getElementById('oneDay').addEventListener('change', function() {
+    document.getElementById('endDateField').style.display = 'none';
+});
+
+document.getElementById('multipleDays').addEventListener('change', function() {
+    document.getElementById('endDateField').style.display = 'flex';
+});
+
 document.getElementById("allDayYes").addEventListener("change", function() {
   document.getElementById("timeFields").style.display = "none";
+    document.getElementById('startTime').value = '09:00';
+    document.getElementById('endTime').value = '18:00';
 });
 
 document.getElementById("allDayNo").addEventListener("change", function() {
   document.getElementById("timeFields").style.display = "flex";
 });
 
-/* TODO: da rivedere
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  var title = document.getElementById("title").value;
-  var car = document.getElementById("car").value;
-  var allDay = document.getElementById("allDay").value === "yes" ? 1 : 0;
-  var startTime = document.getElementById("startTime").value;
-  var endTime = document.getElementById("endTime").value;
-  var creator = <%=Session("userID")%>;
-
-  // Validazione dei campi e gestione dei dati
-  if (title && car) {
-    if (allDay === 0 && startTime && endTime) {
-      // Fai qualcosa con i dati
-      console.log("Title:", title);
-      console.log("Car:", car);
-      console.log("Rent for Whole Day:", allDay);
-      console.log("Start Time:", startTime);
-      console.log("End Time:", endTime);
-    } else if (allDay === 1) {
-      // Fai qualcosa con i dati
-      console.log("Title:", title);
-      console.log("Car:", car);
-      console.log("Rent for Whole Day:", allDay);
-    } else {
-      alert("Please fill in all fields.");
-    }
-  } else {
-    alert("Please fill in all fields.");
-  }
-
-  modal.style.display = "none"; // Chiudi il modale dopo l'invio del modulo
-});*/
 </script>
 
 </body>
