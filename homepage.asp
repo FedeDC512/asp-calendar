@@ -116,7 +116,9 @@ End If
                 document.getElementById('startDate').value = info.startStr;
                 document.getElementById('endDate').value = endVisual;
 
-                form.addEventListener('submit', function(event) { //funzione che aggunge al tasto Submit la funzione per inviare i dati
+                $('#eventForm').on('submit', handleSubmit);
+                
+                function handleSubmit(event) { //funzione che aggunge al tasto Submit la funzione per inviare i dati
                     event.preventDefault();
 
                     var title = document.getElementById("title").value;
@@ -138,8 +140,19 @@ End If
 
                     var creator = <%=Session("userID")%>;
 
+                    if (multipleDays && startDate == endDate) { // Verifica se si stanno inserendo date illegali
+                        alert('If multiple days is selected, the start date and end date must be different.');
+                        event.preventDefault();
+                        return;
+                    } else if (multipleDays && startDate > endDate) {
+                        alert('The end date cannot be before the start date.');
+                        event.preventDefault();
+                        return;
+                    }
+
                     let eventData;
-                    if (allDay == 0){
+                    if (allDay == 0){ // Caso in cui selezioni solo un giorno con orari o più giorni con orari, o selezioni più giorni dal calendario, ma con il modal metti in seguito un solo giorno con orari, o selezioni più giorni con orari e poi metti più giorni diversi con orari
+                        console.log("allDay == 0");
                         if(multipleDays == 0) endDate = startDate;
 
                         startDate = startDate + 'T' + startTime;
@@ -158,7 +171,11 @@ End If
                         console.log(eventData);
                         calendar.addEvent(eventData);
                         saveEvent(title, startDate, endDate, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
-                    } else if (allDay == 1 && multipleDays == 0){ //caso in cui selezioni più giorni dal calendario, ma con il modal metti in seguito un solo giorno
+                        
+                    } else if (allDay == 1 && multipleDays == 0){ // Caso in cui: selezioni solo un giorno allDay, o selezioni più giorni dal calendario, ma con il modal metti in seguito un solo giorno allDay
+                        console.log("allDay == 1 && multipleDays == 0");
+                        console.log("allDay:" + allDay +"multipleDays:" + multipleDays);
+                        console.log(startDate);
                         endDate = new Date(startDate); 
                         giorno = endDate.getDate();
                         endDate.setDate(giorno + 1);
@@ -175,14 +192,17 @@ End If
                         };
                         console.log(eventData);
                         calendar.addEvent(eventData);
-                        saveEvent(title, startDate, endDate, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                        saveEvent(title, startDate, endDate, car, creator, allDay);
                     
-                    } /*else if (info.endStr == startDate && multipleDays == 1){ //caso in cui selezioni un giorno dal calendario, ma con il modal metti in seguito più giorni
-                        endDate = new Date(startDate); 
+                    } else { // Caso in cui selezioni più giorni allDay, o selezioni più giorni o un giorno dal calendario, ma con il modal metti più giorni allDay ma con date diverse
+                        console.log("else");
+                        console.log("info.endStr:" + info.endStr +" endDate:" + endDate);
+
+                        endDate = new Date(endDate); 
                         giorno = endDate.getDate();
                         endDate.setDate(giorno + 1);
                         endDate = endDate.toISOString().split('T')[0];
-                        
+
                         eventData = {
                             title: title,
                             car: car,
@@ -192,28 +212,15 @@ End If
                             allDay: allDay,
                             multipleDays: multipleDays,
                         };
-                        console.log(eventData);
-                        calendar.addEvent(eventData);
-                        saveEvent(title, startDate, endDate, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
-                    
-                    } */else {
-                        eventData = {
-                            title: title,
-                            car: car,
-                            start: startDate,
-                            end: info.endStr, //negli eventi allDay la data di fine è giusta
-                            creator: creator,
-                            allDay: allDay,
-                            multipleDays: multipleDays,
-                        };
                         
                         console.log(eventData);
                         calendar.addEvent(eventData);
-                        saveEvent(title, startDate, info.endStr, car, creator, allDay); // Chiamata alla funzione ASP per salvare l'evento
+                        saveEvent(title, startDate, endDate, car, creator, allDay);
                     }
 
+                    resetModal();
                     modal.style.display = "none"; // Chiudi il modale dopo l'invio del modulo
-                    });
+                };
 
             },
             eventClick: function(info) {
@@ -243,7 +250,7 @@ End If
             }
         });
 
-        $(calendarEl).data('fullCalendarObj',calendar); //save the calendar pointer in data attached to Dom object
+        $(calendarEl).data('fullCalendarObj',calendar); // Save the calendar pointer in data attached to Dom object
 
         calendar.render();
         
@@ -453,6 +460,9 @@ End If
         <div class="small-form">
             <label for="car">Car Model <span>*</span></label>
             <input class="bootstrap-form" type="text" id="car" placeholder="Car Model" required>
+            
+            <div id="car-options" class="form-car-container"></div>
+            <button type="button" id="load-more-btn">Load More</button>
         </div>
         <div>
             <label for="rentDuration">Rent Duration <span>*</span></label><br>
@@ -509,12 +519,14 @@ modals.forEach(function(modal) {
   var closeButton = modal.querySelector('.close');
 
   closeButton.addEventListener('click', function() {
+    resetModal();
     modal.style.display = 'none';
   });
 
   window.addEventListener('click', function(event) {
     if (event.target === modal) {
-      modal.style.display = 'none';
+        resetModal();
+        modal.style.display = 'none';
     }
   });
 });
@@ -538,6 +550,75 @@ document.getElementById("allDayNo").addEventListener("change", function() {
   document.getElementById("timeFields").style.display = "flex";
 });
 
+function resetModal() {//definita qui perchè non accessibile da fuori, ridefinita in seguito per lo stesso motivo
+    // Reset tutti i campi del form
+    document.getElementById("eventForm").reset();
+    // Nascondi il campo "End Date" e "Time Fields" se sono stati visualizzati
+    document.getElementById('endDateField').style.display = 'none';
+    document.getElementById('timeFields').style.display = 'none';
+    // Ripristina i valori predefiniti
+    document.getElementById('oneDay').checked = true;
+    document.getElementById('allDayYes').checked = true;
+    document.getElementById('startTime').value = '09:00';
+    document.getElementById('endTime').value = '18:00';
+    // Nascondi il modal
+    document.getElementById('calendarModal').style.display = 'none';
+    $('#eventForm').off();
+    //document.getElementById('eventForm').removeEventListener('submit', handleSubmit);
+}
+
+
+$(document).ready(function() {
+    let loading = false;
+    let allCarsLoaded = false;
+    let currentCarPage = 0;
+
+    function loadCars() {
+        if (!loading && !allCarsLoaded) {
+            loading = true;
+            $.ajax({
+                url: "get_cars.asp",
+                type: "GET",
+                dataType: "json",
+                data: { numCarsToLoad: 6, currentCarPage: currentCarPage },
+                success: function(data) {
+                    if (data.length > 0) {
+                        $.each(data, function(key, value) {
+                            $('#car-options').append(`
+                                <div class="form-car-card">
+                                    <label for="car${currentCarPage * 6 + key}">
+                                        <img class="form-car-img" src="cars/${value.name}.png" alt="${value.name}">
+                                    </label>
+                                    <div>
+                                        <input type="radio" id="car${currentCarPage * 6 + key}" name="car" value="${value.name}" required>
+                                        <label for="car${currentCarPage * 6 + key}">${value.name}</div></label>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                        currentCarPage++;
+                    } else {
+                        allCarsLoaded = true;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error loading car data: " + status + " - " + error);
+                },
+                complete: function() {
+                    loading = false;
+                }
+            });
+        }
+    }
+
+    // Carica i dati delle macchine inizialmente
+    loadCars();
+
+    // Carica ulteriori dati delle macchine alla pressione del tasto "Load More"
+    $('#load-more-btn').on('click', function() {
+        loadCars();
+    });
+});
 </script>
 
 </body>
