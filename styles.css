@@ -88,6 +88,18 @@ body {
     margin: 1rem;
   }
 
+  .event-info{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 1rem;
+    padding: 2rem;
+
+    background: white;
+    border: 1px solid white;
+    box-shadow: 3px 3px 9px hsla(240, 14%, 69%, 0.2);
+  }
+
   .event-info, .profile-info, .event-profile-info {
     margin: 1rem 2rem;
     padding: 1rem;
@@ -171,8 +183,7 @@ body {
   }
 
   .car-calendar{
-    height: 13rem;
-    margin: 0rem 1rem;
+    height: 17rem;
   }
 
   .car-profile{
@@ -429,7 +440,7 @@ body {
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 70%;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   animation: slideIn 0.3s ease-in-out;
@@ -491,11 +502,22 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  align-items: flex-start;
 }
 
 .form-car-img{
+  height: 7rem;
+}
+
+.form-car-img-container{
   height: 8rem;
+  width: 13rem;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-btn-container{
+  display: flex;
+  justify-content: center;
 }
 
     
@@ -582,6 +604,25 @@ body {
     }
     .wrapper{
       min-height: 0;
+    }
+
+    .modal-content {
+      width: 80%;
+    }
+
+    .form-car-img{
+      height: 3.5rem;
+    }
+    
+    .form-car-img-container{
+      height: 4rem;
+      width: 7rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-car-name-container{
+      width: 7rem;
     }
 
   }

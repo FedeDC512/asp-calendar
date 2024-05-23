@@ -75,6 +75,7 @@ End If
                             } else {
                                 console.error('Event with ID ' + id + ' not found.');
                             }
+                            hideEventInfo();
                         },
                         error: function(xhr, status, error) {
                             console.error('Error deleting event:', error);
@@ -122,7 +123,7 @@ End If
                     event.preventDefault();
 
                     var title = document.getElementById("title").value;
-                    var car = document.getElementById("car").value;
+                    var car = $('input[name="car"]:checked').val();
 
                     var multipleDays;
                     if (document.getElementById("oneDay").checked) multipleDays = 0;
@@ -346,29 +347,85 @@ End If
                         end = end.toLocaleDateString();
                         console.log(start + " - " + end);
 
-                        html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+                        html = `<div class="event-item-bar"><div class="car-title-text">Selected Event:</div>
                         <button class="bootstrap-btn-2" onclick="hideEventInfo()">Close</button></div>
-                        <p><strong>Title:</strong> ${event.title} </p>
-                        <p><strong>Car:</strong> ${event.extendedProps.car} </p>
-                        <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
-                        <p><strong>Created by:</strong> ${username} </p>
-                        <p><strong>All Day:</strong> ${event.allDay} </p>`
-                        if( end == start ) html += `<p><strong>Date:</strong> ${start} </p>`
-                        else html += `<p><strong>Start:</strong> ${start} </p>
-                            <p><strong>End:</strong> ${end} </p>`
-                        html += `<button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                        <div class="car-title-text" style="text-align: center;"><strong>Title:</strong> ${event.title} </div>
+                        <div class="car-list-img-container">
+                            <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
+                        </div>
+                        <ul class="car-info" style="color: black;">
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="m5 11l1.5-4.5h11L19 11m-1.5 5a1.5 1.5 0 0 1-1.5-1.5a1.5 1.5 0 0 1 1.5-1.5a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m-11 0A1.5 1.5 0 0 1 5 14.5A1.5 1.5 0 0 1 6.5 13A1.5 1.5 0 0 1 8 14.5A1.5 1.5 0 0 1 6.5 16M18.92 6c-.2-.58-.76-1-1.42-1h-11c-.66 0-1.22.42-1.42 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8z"/></svg>
+                                <div><strong>Car:</strong> ${event.extendedProps.car} </div>
+                            </li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linejoin="round" d="M4 18a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="7" r="3"/></g></svg>
+                                <div><strong>Created by:</strong> ${username} </div>
+                            </li>
+                        </ul>
+                        <ul class="car-info" style="color: black;">
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 20 20"><path fill="currentColor" d="M17 5.5A2.5 2.5 0 0 0 14.5 3h-9A2.5 2.5 0 0 0 3 5.5v9A2.5 2.5 0 0 0 5.5 17h4.1a5.5 5.5 0 0 1-.393-1H8v-3h1.207q.149-.524.393-1H8V8h4v1.6a5.5 5.5 0 0 1 1-.393V8h3v1.207q.524.149 1 .393zm-13 9V13h3v3H5.5l-.144-.007A1.5 1.5 0 0 1 4 14.5M12 4v3H8V4zm1 0h1.5l.145.007A1.5 1.5 0 0 1 16 5.5V7h-3zM7 4v3H4V5.5l.007-.144A1.5 1.5 0 0 1 5.5 4zm0 4v4H4V8zm12 6.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m-4-2a.5.5 0 0 0-1 0V14h-1.5a.5.5 0 0 0 0 1H14v1.5a.5.5 0 0 0 1 0V15h1.5a.5.5 0 0 0 0-1H15z"/></svg>
+                                <div><strong>All Day:</strong> ${event.allDay} </div>
+                            </li>
+                            <li></li>`
+                        if( end == start ) html += `
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5M4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5S5.5 6.57 5.5 8.5S7.07 12 9 12m0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7m7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44M15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35c.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35"></path></svg>
+                                <div><strong>Date:</strong> ${start} </div>
+                            </li>`
+                        else html += `
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 100 100"><path fill="currentColor" d="M21 32C9.459 32 0 41.43 0 52.94c0 4.46 1.424 8.605 3.835 12.012l14.603 25.244c2.045 2.672 3.405 2.165 5.106-.14l16.106-27.41c.325-.59.58-1.216.803-1.856A20.668 20.668 0 0 0 42 52.94C42 41.43 32.544 32 21 32m0 9.812c6.216 0 11.16 4.931 11.16 11.129c0 6.198-4.944 11.127-11.16 11.127c-6.215 0-11.16-4.93-11.16-11.127c0-6.198 4.945-11.129 11.16-11.129"/><path fill="currentColor" fill-rule="evenodd" d="M88.209 37.412c-2.247.05-4.5.145-6.757.312l.348 5.532a126.32 126.32 0 0 1 6.513-.303zm-11.975.82c-3.47.431-6.97 1.045-10.43 2.032l1.303 5.361c3.144-.896 6.402-1.475 9.711-1.886zM60.623 42.12a24.52 24.52 0 0 0-3.004 1.583l-.004.005l-.006.002c-1.375.866-2.824 1.965-4.007 3.562c-.857 1.157-1.558 2.62-1.722 4.35l5.095.565c.038-.406.246-.942.62-1.446h.002v-.002c.603-.816 1.507-1.557 2.582-2.235l.004-.002a19.64 19.64 0 0 1 2.388-1.256zM58 54.655l-3.303 4.235c.783.716 1.604 1.266 2.397 1.726l.01.005l.01.006c2.632 1.497 5.346 2.342 7.862 3.144l1.446-5.318c-2.515-.802-4.886-1.576-6.918-2.73c-.582-.338-1.092-.691-1.504-1.068m13.335 5.294l-1.412 5.327l.668.208l.82.262c2.714.883 5.314 1.826 7.638 3.131l2.358-4.92c-2.81-1.579-5.727-2.611-8.538-3.525l-.008-.002l-.842-.269zm14.867 7.7l-3.623 3.92c.856.927 1.497 2.042 1.809 3.194l.002.006l.002.009c.372 1.345.373 2.927.082 4.525l5.024 1.072c.41-2.256.476-4.733-.198-7.178c-.587-2.162-1.707-4.04-3.098-5.548M82.72 82.643a11.84 11.84 0 0 1-1.826 1.572h-.002c-1.8 1.266-3.888 2.22-6.106 3.04l1.654 5.244c2.426-.897 4.917-1.997 7.245-3.635l.006-.005l.003-.002a16.95 16.95 0 0 0 2.639-2.287zm-12.64 6.089c-3.213.864-6.497 1.522-9.821 2.08l.784 5.479c3.421-.575 6.856-1.262 10.27-2.18zm-14.822 2.836c-3.346.457-6.71.83-10.084 1.148l.442 5.522c3.426-.322 6.858-.701 10.285-1.17zm-15.155 1.583c-3.381.268-6.77.486-10.162.67l.256 5.536c3.425-.185 6.853-.406 10.28-.678zm-15.259.92c-2.033.095-4.071.173-6.114.245l.168 5.541a560.1 560.1 0 0 0 6.166-.246z" color="currentColor"/></svg>
+                                <div><strong>Start Date:</strong> ${start} </div>
+                            </li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 100 100"><path fill="currentColor" d="M87.75 0C81.018 0 75.5 5.501 75.5 12.216c0 2.601.83 5.019 2.237 7.006l8.519 14.726c1.193 1.558 1.986 1.262 2.978-.082l9.395-15.99c.19-.343.339-.708.468-1.082a12.05 12.05 0 0 0 .903-4.578C100 5.5 94.484 0 87.75 0m0 5.724c3.626 0 6.51 2.876 6.51 6.492c0 3.615-2.884 6.49-6.51 6.49c-3.625 0-6.51-2.875-6.51-6.49c0-3.616 2.885-6.492 6.51-6.492"/><path fill="currentColor" fill-rule="evenodd" d="M88.209 37.412c-2.247.05-4.5.145-6.757.312l.348 5.532a126.32 126.32 0 0 1 6.513-.303zm-11.975.82c-3.47.431-6.97 1.045-10.43 2.032l1.303 5.361c3.144-.896 6.402-1.475 9.711-1.886zM60.623 42.12a24.52 24.52 0 0 0-3.004 1.583l-.004.005l-.006.002c-1.375.866-2.824 1.965-4.007 3.562c-.857 1.157-1.558 2.62-1.722 4.35l5.095.565c.038-.406.246-.942.62-1.446h.002v-.002c.603-.816 1.507-1.557 2.582-2.235l.004-.002a19.64 19.64 0 0 1 2.388-1.256zM58 54.655l-3.303 4.235c.783.716 1.604 1.266 2.397 1.726l.01.005l.01.006c2.632 1.497 5.346 2.342 7.862 3.144l1.446-5.318c-2.515-.802-4.886-1.576-6.918-2.73c-.582-.338-1.092-.691-1.504-1.068m13.335 5.294l-1.412 5.327l.668.208l.82.262c2.714.883 5.314 1.826 7.638 3.131l2.358-4.92c-2.81-1.579-5.727-2.611-8.538-3.525l-.008-.002l-.842-.269zm14.867 7.7l-3.623 3.92c.856.927 1.497 2.042 1.809 3.194l.002.006l.002.009c.372 1.345.373 2.927.082 4.525l5.024 1.072c.41-2.256.476-4.733-.198-7.178c-.587-2.162-1.707-4.04-3.098-5.548M82.72 82.643a11.84 11.84 0 0 1-1.826 1.572h-.002c-1.8 1.266-3.888 2.22-6.106 3.04l1.654 5.244c2.426-.897 4.917-1.997 7.245-3.635l.006-.005l.003-.002a16.95 16.95 0 0 0 2.639-2.287zm-12.64 6.089c-3.213.864-6.497 1.522-9.821 2.08l.784 5.479c3.421-.575 6.856-1.262 10.27-2.18zm-14.822 2.836c-3.346.457-6.71.83-10.084 1.148l.442 5.522c3.426-.322 6.858-.701 10.285-1.17zm-15.155 1.583c-3.381.268-6.77.486-10.162.67l.256 5.536c3.425-.185 6.853-.406 10.28-.678zm-15.259.92c-2.033.095-4.071.173-6.114.245l.168 5.541a560.1 560.1 0 0 0 6.166-.246z" color="currentColor"/></svg>
+                                <div><strong>End Date:</strong> ${end} </div>
+                            </li>`
+                        html += `</ul>
+                        <button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
                     } else {
                         console.log(event.start.toLocaleString() + " - " + event.end.toLocaleString());
 
-                        html = `<div class="event-item-bar"><div class="event-title">Selected Event:</div>
+                        html = `<div class="event-item-bar"><div class="car-title-text">Selected Event:</div>
                         <button class="bootstrap-btn-2" onclick="hideEventInfo()">Close</button></div>
-                        <p><strong>Title:</strong> ${event.title} </p>
-                        <p><strong>Car:</strong> ${event.extendedProps.car} </p>
-                        <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
-                        <p><strong>Created by:</strong> ${username} </p>
-                        <p><strong>All Day:</strong> ${event.allDay} </p>
-                        <p><strong>Start:</strong> ${event.start.toLocaleString()} </p>
-                        <p><strong>End:</strong> ${event.end.toLocaleString()} </p>
+                        <div class="car-title-text" style="text-align: center;"><strong>Title:</strong> ${event.title} </div>
+                        <div class="car-list-img-container">
+                            <img class="car-calendar" src="cars/${event.extendedProps.car}.png" alt="${event.extendedProps.car}">
+                        </div><ul class="car-info" style="color: black;">
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="m5 11l1.5-4.5h11L19 11m-1.5 5a1.5 1.5 0 0 1-1.5-1.5a1.5 1.5 0 0 1 1.5-1.5a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m-11 0A1.5 1.5 0 0 1 5 14.5A1.5 1.5 0 0 1 6.5 13A1.5 1.5 0 0 1 8 14.5A1.5 1.5 0 0 1 6.5 16M18.92 6c-.2-.58-.76-1-1.42-1h-11c-.66 0-1.22.42-1.42 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8z"/></svg>
+                                <div><strong>Car:</strong> ${event.extendedProps.car} </div>
+                            </li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linejoin="round" d="M4 18a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="7" r="3"/></g></svg>
+                                <div><strong>Created by:</strong> ${username} </div>
+                            </li>
+                        </ul>
+                        <ul class="car-info" style="color: black;">
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 20 20"><path fill="currentColor" d="M17 5.5A2.5 2.5 0 0 0 14.5 3h-9A2.5 2.5 0 0 0 3 5.5v9A2.5 2.5 0 0 0 5.5 17h4.1a5.5 5.5 0 0 1-.393-1H8v-3h1.207q.149-.524.393-1H8V8h4v1.6a5.5 5.5 0 0 1 1-.393V8h3v1.207q.524.149 1 .393zm-13 9V13h3v3H5.5l-.144-.007A1.5 1.5 0 0 1 4 14.5M12 4v3H8V4zm1 0h1.5l.145.007A1.5 1.5 0 0 1 16 5.5V7h-3zM7 4v3H4V5.5l.007-.144A1.5 1.5 0 0 1 5.5 4zm0 4v4H4V8zm12 6.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m-4-2a.5.5 0 0 0-1 0V14h-1.5a.5.5 0 0 0 0 1H14v1.5a.5.5 0 0 0 1 0V15h1.5a.5.5 0 0 0 0-1H15z"/></svg>
+                                <div><strong>All Day:</strong> ${event.allDay} </div>
+                            </li>
+                            <li></li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 100 100"><path fill="currentColor" d="M21 32C9.459 32 0 41.43 0 52.94c0 4.46 1.424 8.605 3.835 12.012l14.603 25.244c2.045 2.672 3.405 2.165 5.106-.14l16.106-27.41c.325-.59.58-1.216.803-1.856A20.668 20.668 0 0 0 42 52.94C42 41.43 32.544 32 21 32m0 9.812c6.216 0 11.16 4.931 11.16 11.129c0 6.198-4.944 11.127-11.16 11.127c-6.215 0-11.16-4.93-11.16-11.127c0-6.198 4.945-11.129 11.16-11.129"/><path fill="currentColor" fill-rule="evenodd" d="M88.209 37.412c-2.247.05-4.5.145-6.757.312l.348 5.532a126.32 126.32 0 0 1 6.513-.303zm-11.975.82c-3.47.431-6.97 1.045-10.43 2.032l1.303 5.361c3.144-.896 6.402-1.475 9.711-1.886zM60.623 42.12a24.52 24.52 0 0 0-3.004 1.583l-.004.005l-.006.002c-1.375.866-2.824 1.965-4.007 3.562c-.857 1.157-1.558 2.62-1.722 4.35l5.095.565c.038-.406.246-.942.62-1.446h.002v-.002c.603-.816 1.507-1.557 2.582-2.235l.004-.002a19.64 19.64 0 0 1 2.388-1.256zM58 54.655l-3.303 4.235c.783.716 1.604 1.266 2.397 1.726l.01.005l.01.006c2.632 1.497 5.346 2.342 7.862 3.144l1.446-5.318c-2.515-.802-4.886-1.576-6.918-2.73c-.582-.338-1.092-.691-1.504-1.068m13.335 5.294l-1.412 5.327l.668.208l.82.262c2.714.883 5.314 1.826 7.638 3.131l2.358-4.92c-2.81-1.579-5.727-2.611-8.538-3.525l-.008-.002l-.842-.269zm14.867 7.7l-3.623 3.92c.856.927 1.497 2.042 1.809 3.194l.002.006l.002.009c.372 1.345.373 2.927.082 4.525l5.024 1.072c.41-2.256.476-4.733-.198-7.178c-.587-2.162-1.707-4.04-3.098-5.548M82.72 82.643a11.84 11.84 0 0 1-1.826 1.572h-.002c-1.8 1.266-3.888 2.22-6.106 3.04l1.654 5.244c2.426-.897 4.917-1.997 7.245-3.635l.006-.005l.003-.002a16.95 16.95 0 0 0 2.639-2.287zm-12.64 6.089c-3.213.864-6.497 1.522-9.821 2.08l.784 5.479c3.421-.575 6.856-1.262 10.27-2.18zm-14.822 2.836c-3.346.457-6.71.83-10.084 1.148l.442 5.522c3.426-.322 6.858-.701 10.285-1.17zm-15.155 1.583c-3.381.268-6.77.486-10.162.67l.256 5.536c3.425-.185 6.853-.406 10.28-.678zm-15.259.92c-2.033.095-4.071.173-6.114.245l.168 5.541a560.1 560.1 0 0 0 6.166-.246z" color="currentColor"/></svg>
+                                <div><strong>Start Date:</strong> ${event.start.toLocaleDateString()} </div>
+                            </li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 100 100"><path fill="currentColor" d="M87.75 0C81.018 0 75.5 5.501 75.5 12.216c0 2.601.83 5.019 2.237 7.006l8.519 14.726c1.193 1.558 1.986 1.262 2.978-.082l9.395-15.99c.19-.343.339-.708.468-1.082a12.05 12.05 0 0 0 .903-4.578C100 5.5 94.484 0 87.75 0m0 5.724c3.626 0 6.51 2.876 6.51 6.492c0 3.615-2.884 6.49-6.51 6.49c-3.625 0-6.51-2.875-6.51-6.49c0-3.616 2.885-6.492 6.51-6.492"/><path fill="currentColor" fill-rule="evenodd" d="M88.209 37.412c-2.247.05-4.5.145-6.757.312l.348 5.532a126.32 126.32 0 0 1 6.513-.303zm-11.975.82c-3.47.431-6.97 1.045-10.43 2.032l1.303 5.361c3.144-.896 6.402-1.475 9.711-1.886zM60.623 42.12a24.52 24.52 0 0 0-3.004 1.583l-.004.005l-.006.002c-1.375.866-2.824 1.965-4.007 3.562c-.857 1.157-1.558 2.62-1.722 4.35l5.095.565c.038-.406.246-.942.62-1.446h.002v-.002c.603-.816 1.507-1.557 2.582-2.235l.004-.002a19.64 19.64 0 0 1 2.388-1.256zM58 54.655l-3.303 4.235c.783.716 1.604 1.266 2.397 1.726l.01.005l.01.006c2.632 1.497 5.346 2.342 7.862 3.144l1.446-5.318c-2.515-.802-4.886-1.576-6.918-2.73c-.582-.338-1.092-.691-1.504-1.068m13.335 5.294l-1.412 5.327l.668.208l.82.262c2.714.883 5.314 1.826 7.638 3.131l2.358-4.92c-2.81-1.579-5.727-2.611-8.538-3.525l-.008-.002l-.842-.269zm14.867 7.7l-3.623 3.92c.856.927 1.497 2.042 1.809 3.194l.002.006l.002.009c.372 1.345.373 2.927.082 4.525l5.024 1.072c.41-2.256.476-4.733-.198-7.178c-.587-2.162-1.707-4.04-3.098-5.548M82.72 82.643a11.84 11.84 0 0 1-1.826 1.572h-.002c-1.8 1.266-3.888 2.22-6.106 3.04l1.654 5.244c2.426-.897 4.917-1.997 7.245-3.635l.006-.005l.003-.002a16.95 16.95 0 0 0 2.639-2.287zm-12.64 6.089c-3.213.864-6.497 1.522-9.821 2.08l.784 5.479c3.421-.575 6.856-1.262 10.27-2.18zm-14.822 2.836c-3.346.457-6.71.83-10.084 1.148l.442 5.522c3.426-.322 6.858-.701 10.285-1.17zm-15.155 1.583c-3.381.268-6.77.486-10.162.67l.256 5.536c3.425-.185 6.853-.406 10.28-.678zm-15.259.92c-2.033.095-4.071.173-6.114.245l.168 5.541a560.1 560.1 0 0 0 6.166-.246z" color="currentColor"/></svg>
+                                <div><strong>End Date:</strong> ${event.end.toLocaleDateString()} </div>
+                            </li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5M4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5S5.5 6.57 5.5 8.5S7.07 12 9 12m0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7m7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44M15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35c.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35"></path></svg>
+                                <div><strong>Start Time:</strong> ${String(event.start.getHours()).padStart(2, "0")}:${String(event.start.getMinutes()).padStart(2, "0")} </div>
+                            </li>
+                            <li class="car-feature">
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5M4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5S5.5 6.57 5.5 8.5S7.07 12 9 12m0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7m7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44M15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35c.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35"></path></svg>
+                                <div><strong>End Time:</strong> ${String(event.end.getHours()).padStart(2, "0")}:${String(event.end.getMinutes()).padStart(2, "0")} </div>
+                            </li>
+                        </ul>
                         <button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
                     }
                     infoItem.innerHTML = html;
@@ -459,10 +516,10 @@ End If
         </div>
         <div class="small-form">
             <label for="car">Car Model <span>*</span></label>
-            <input class="bootstrap-form" type="text" id="car" placeholder="Car Model" required>
-            
             <div id="car-options" class="form-car-container"></div>
-            <button type="button" id="load-more-btn">Load More</button>
+            <div class="modal-btn-container">
+                <button type="button" id="load-more-btn" class="bootstrap-btn-2">Load More</button>
+            </div>
         </div>
         <div>
             <label for="rentDuration">Rent Duration <span>*</span></label><br>
@@ -500,7 +557,7 @@ End If
             </div>
         </div>
 
-      <button type="submit" class="bootstrap-btn-1">Submit</button>
+            <button type="submit" class="bootstrap-btn-1">Submit</button>
     </form>
   </div>
 </div>
@@ -572,33 +629,55 @@ $(document).ready(function() {
     let loading = false;
     let allCarsLoaded = false;
     let currentCarPage = 0;
+    let totalCars;
+    $.ajax({
+        url: "get_cars.asp",
+        type: "GET",
+        dataType: "json",
+        data: { numCarsToLoad: 1000, currentCarPage: 0 }, // Load a large number to get total count
+        success: function(data) {
+            totalCars = data.length;
+            console.log("Total number of cars: " + totalCars);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error loading car data: " + status + " - " + error);
+        }
+    });
 
     function loadCars() {
         if (!loading && !allCarsLoaded) {
             loading = true;
+            numCarsToLoad = 5;
             $.ajax({
                 url: "get_cars.asp",
                 type: "GET",
                 dataType: "json",
-                data: { numCarsToLoad: 6, currentCarPage: currentCarPage },
+                data: { numCarsToLoad: numCarsToLoad, currentCarPage: currentCarPage },
                 success: function(data) {
                     if (data.length > 0) {
                         $.each(data, function(key, value) {
                             $('#car-options').append(`
                                 <div class="form-car-card">
-                                    <label for="car${currentCarPage * 6 + key}">
-                                        <img class="form-car-img" src="cars/${value.name}.png" alt="${value.name}">
+                                    <label for="car${currentCarPage * numCarsToLoad + key}">
+                                        <div class="form-car-img-container">
+                                            <img class="form-car-img" src="cars/${value.name}.png" alt="${value.name}">
+                                        </div>
                                     </label>
-                                    <div>
-                                        <input type="radio" id="car${currentCarPage * 6 + key}" name="car" value="${value.name}" required>
-                                        <label for="car${currentCarPage * 6 + key}">${value.name}</div></label>
+                                    <div class="form-car-name-container">
+                                        <input type="radio" id="car${currentCarPage * numCarsToLoad + key}" name="car" value="${value.name}" required>
+                                        <label for="car${currentCarPage * numCarsToLoad + key}">${value.name}</div></label>
                                     </div>
                                 </div>
                             `);
                         });
                         currentCarPage++;
+
+                        if (currentCarPage == totalCars/numCarsToLoad){
+                            $('#load-more-btn').hide();
+                            allCarsLoaded = true;
+                        }
                     } else {
-                        allCarsLoaded = true;
+                        console.log("No car loaded");
                     }
                 },
                 error: function(xhr, status, error) {
