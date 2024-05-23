@@ -132,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-right" id="col-right-login">
                 <div class="login-title stick-regular">Login</div>
                 <form class="form" method="post" action="index.asp">
-                    <input class="bootstrap-form" placeholder="Username" type="text" name="username">
-                    <input class="bootstrap-form" placeholder="Password" type="password" name="password">
+                    <input class="bootstrap-form" placeholder="Username" type="text" name="username" required>
+                    <input class="bootstrap-form" placeholder="Password" type="password" name="password" required>
                     <input class="bootstrap-btn-1" type="submit" value="Login">
                 </form>
                 <div class="error-message"> <%= dynamicError %></div>
@@ -142,11 +142,19 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-right sign-up-col-right hidden" id="col-right-signup">
                 <div class="login-title stick-regular">Sign Up</div>
                 <form class="form" method="post" action="sign_in.asp">
-                    <input class="bootstrap-form" placeholder="Username" type="text" name="username">
-                    <input class="bootstrap-form" placeholder="Password" type="password" name="password">
-                    <div>
-                        <input type="checkbox" name="is_admin">
-                        <label > Check to be an admin</label>
+                    <input class="bootstrap-form" placeholder="Username" type="text" name="username" required>
+                    <input class="bootstrap-form" placeholder="Password" type="password" name="password" required>
+                    <div class="checkbox-wrapper-4">
+                        <input class="inp-cbx" id="admin-true" type="checkbox" name="is_admin"/>
+                        <label class="cbx" for="admin-true"><span style="color: black;">
+                        <svg width="12px" height="10px">
+                            <use xlink:href="#check-4"></use>
+                        </svg></span><span style="color: black;">Check to be an admin</span></label>
+                        <svg class="inline-svg">
+                            <symbol id="check-4" viewbox="0 0 12 10">
+                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                            </symbol>
+                        </svg>
                     </div>
                     <input class="bootstrap-btn-1" type="submit" value="Sign Up">
                 </form>

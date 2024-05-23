@@ -371,7 +371,7 @@ End If
                             <li></li>`
                         if( end == start ) html += `
                             <li class="car-feature">
-                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5M4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5S5.5 6.57 5.5 8.5S7.07 12 9 12m0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7m7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44M15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35c.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35"></path></svg>
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 100 100"><path fill="currentColor" d="M21 32C9.459 32 0 41.43 0 52.94c0 4.46 1.424 8.605 3.835 12.012l14.603 25.244c2.045 2.672 3.405 2.165 5.106-.14l16.106-27.41c.325-.59.58-1.216.803-1.856A20.668 20.668 0 0 0 42 52.94C42 41.43 32.544 32 21 32m0 9.812c6.216 0 11.16 4.931 11.16 11.129c0 6.198-4.944 11.127-11.16 11.127c-6.215 0-11.16-4.93-11.16-11.127c0-6.198 4.945-11.129 11.16-11.129M87.75 0C81.018 0 75.5 5.501 75.5 12.216c0 2.601.83 5.019 2.237 7.006l8.519 14.726c1.193 1.558 1.986 1.262 2.978-.082l9.395-15.99c.19-.343.339-.708.468-1.082a12.05 12.05 0 0 0 .903-4.578C100 5.5 94.484 0 87.75 0m0 5.724c3.626 0 6.51 2.876 6.51 6.492c0 3.615-2.884 6.49-6.51 6.49c-3.625 0-6.51-2.875-6.51-6.49c0-3.616 2.885-6.492 6.51-6.492"/><path fill="currentColor" fill-rule="evenodd" d="M88.209 37.412c-2.247.05-4.5.145-6.757.312l.348 5.532a126.32 126.32 0 0 1 6.513-.303zm-11.975.82c-3.47.431-6.97 1.045-10.43 2.032l1.303 5.361c3.144-.896 6.402-1.475 9.711-1.886zM60.623 42.12a24.52 24.52 0 0 0-3.004 1.583l-.004.005l-.006.002c-1.375.866-2.824 1.965-4.007 3.562c-.857 1.157-1.558 2.62-1.722 4.35l5.095.565c.038-.406.246-.942.62-1.446h.002v-.002c.603-.816 1.507-1.557 2.582-2.235l.004-.002a19.64 19.64 0 0 1 2.388-1.256zM58 54.655l-3.303 4.235c.783.716 1.604 1.266 2.397 1.726l.01.005l.01.006c2.632 1.497 5.346 2.342 7.862 3.144l1.446-5.318c-2.515-.802-4.886-1.576-6.918-2.73c-.582-.338-1.092-.691-1.504-1.068m13.335 5.294l-1.412 5.327l.668.208l.82.262c2.714.883 5.314 1.826 7.638 3.131l2.358-4.92c-2.81-1.579-5.727-2.611-8.538-3.525l-.008-.002l-.842-.269zm14.867 7.7l-3.623 3.92c.856.927 1.497 2.042 1.809 3.194l.002.006l.002.009c.372 1.345.373 2.927.082 4.525l5.024 1.072c.41-2.256.476-4.733-.198-7.178c-.587-2.162-1.707-4.04-3.098-5.548M82.72 82.643a11.84 11.84 0 0 1-1.826 1.572h-.002c-1.8 1.266-3.888 2.22-6.106 3.04l1.654 5.244c2.426-.897 4.917-1.997 7.245-3.635l.006-.005l.003-.002a16.95 16.95 0 0 0 2.639-2.287zm-12.64 6.089c-3.213.864-6.497 1.522-9.821 2.08l.784 5.479c3.421-.575 6.856-1.262 10.27-2.18zm-14.822 2.836c-3.346.457-6.71.83-10.084 1.148l.442 5.522c3.426-.322 6.858-.701 10.285-1.17zm-15.155 1.583c-3.381.268-6.77.486-10.162.67l.256 5.536c3.425-.185 6.853-.406 10.28-.678zm-15.259.92c-2.033.095-4.071.173-6.114.245l.168 5.541a560.1 560.1 0 0 0 6.166-.246z" color="currentColor"/></svg>
                                 <div><strong>Date:</strong> ${start} </div>
                             </li>`
                         else html += `
@@ -384,7 +384,7 @@ End If
                                 <div><strong>End Date:</strong> ${end} </div>
                             </li>`
                         html += `</ul>
-                        <button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                        <div><button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button></div>`;
                     } else {
                         console.log(event.start.toLocaleString() + " - " + event.end.toLocaleString());
 
@@ -418,15 +418,15 @@ End If
                                 <div><strong>End Date:</strong> ${event.end.toLocaleDateString()} </div>
                             </li>
                             <li class="car-feature">
-                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5M4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5S5.5 6.57 5.5 8.5S7.07 12 9 12m0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7m7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44M15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35c.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35"></path></svg>
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.29em" height="1.5em" viewBox="0 0 1536 1792"><path fill="currentColor" d="M1408 128q0 261-106.5 461.5T1035 896q160 106 266.5 306.5T1408 1664h96q14 0 23 9t9 23v64q0 14-9 23t-23 9H32q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h96q0-261 106.5-461.5T501 896Q341 790 234.5 589.5T128 128H32q-14 0-23-9T0 96V32Q0 18 9 9t23-9h1472q14 0 23 9t9 23v64q0 14-9 23t-23 9zm-128 0H256q0 66 9 128h1006q9-61 9-128m0 1536q0-130-34-249.5t-90.5-208t-126.5-152T883 960H653q-76 31-146 94.5t-126.5 152t-90.5 208t-34 249.5z"/></svg>
                                 <div><strong>Start Time:</strong> ${String(event.start.getHours()).padStart(2, "0")}:${String(event.start.getMinutes()).padStart(2, "0")} </div>
                             </li>
                             <li class="car-feature">
-                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5M4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5S5.5 6.57 5.5 8.5S7.07 12 9 12m0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7m7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44M15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35c.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35"></path></svg>
+                                <svg class="rhino-red" xmlns="http://www.w3.org/2000/svg" width="1.29em" height="1.5em" viewBox="0 0 1536 1792"><path fill="currentColor" d="M1408 128q0 261-106.5 461.5T1035 896q160 106 266.5 306.5T1408 1664h96q14 0 23 9t9 23v64q0 14-9 23t-23 9H32q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h96q0-261 106.5-461.5T501 896Q341 790 234.5 589.5T128 128H32q-14 0-23-9T0 96V32Q0 18 9 9t23-9h1472q14 0 23 9t9 23v64q0 14-9 23t-23 9zM874 836q77-29 149-92.5T1152.5 591t92.5-210t35-253H256q0 132 35 253t92.5 210T513 743.5T662 836q19 7 30.5 23.5T704 896t-11.5 36.5T662 956q-137 51-244 196h700q-107-145-244-196q-19-7-30.5-23.5T832 896t11.5-36.5T874 836"/></svg>
                                 <div><strong>End Time:</strong> ${String(event.end.getHours()).padStart(2, "0")}:${String(event.end.getMinutes()).padStart(2, "0")} </div>
                             </li>
                         </ul>
-                        <button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button>`;
+                        <div><button class="bootstrap-btn-1" onclick="deleteEvent( ${event.id} )">Delete</button></div>`;
                     }
                     infoItem.innerHTML = html;
 
@@ -483,25 +483,33 @@ End If
 </div>
 
 <div id="myModal" class="modal">
-    <div class="modal-top-margin">
-        <div class="modal-content">
-            <div class="modal-title">
-                <div class="event-title">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
-                Calendar Tutorial</div>
-                <span class="close">&times;</span>
-            </div>
-            <p>Here are some basic instructions on how to use the calendar:</p>
-            <ul>
-                <li><strong>To Add Events:</strong> Click on a day to select it, or hold to select multiple days, then fill in the event details by entering start and end times and choosing one of <a href="cars.asp">our available cars</a>.</li>
-                <li><strong>To Move Events:</strong> Click and drag an event to a new time or date. You can only move events created by you. Only admins can move any event.</li>
-                <li><strong>To Delete Events:</strong> Click on an event and select "Delete" from the info menu. You can only delete events created by you. Only admins can delete any event.</li>
-            </ul>
+    <div class="modal-top-margin"></div>
+    <div class="modal-content">
+        <div class="modal-title">
+            <div class="event-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
+            Calendar Tutorial</div>
+            <span class="close">&times;</span>
         </div>
+        <p>Here are some basic instructions on how to use the calendar:</p>
+        <ul>
+            <li><strong>To Add Events:</strong> Click on a day to select it, or hold to select multiple days. After selecting, you can choose the event name and <a href="cars.asp">car model</a>, specify the rental duration (start and end dates can be adjusted if needed), and decide whether you are renting for a full day or specific hours. You can set the start and end times accordingly.</li>
+            <li><strong>To Move Events:</strong> Click and drag an event to a new time or date. You can only move events created by you. Only admins can move any event.</li>
+            <li><strong>To Delete Events:</strong> Click on an event and select "Delete" from the info menu. You can only delete events created by you. Only admins can delete any event.</li>
+        </ul>
+        <br>
+        <div class="modal-title">
+            <div class="event-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"/></svg>
+            Mobile Usage</div>
+        </div>
+        <p> To add an event on a mobile device, press and hold on the day or drag across multiple days to select them. Once selected, you can enter all the event info.</p>
     </div>
+    
 </div>
 
 <div id="calendarModal" class="modal">
+    <div class="modal-top-margin"></div>
   <div class="modal-content">
   
     <div class="modal-title modal-form-title">
