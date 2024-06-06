@@ -82,10 +82,10 @@ End If
 document.addEventListener('DOMContentLoaded', function() {
     function showSignUp(event) {
         event.preventDefault(); // Impedisce l'azione predefinita del bottone
-        var container = document.getElementById('container');
+        let container = document.getElementById('container');
         container.classList.add('sign-up-container');
 
-        var colLeft = document.getElementById('col-left');
+        let colLeft = document.getElementById('col-left');
         colLeft.classList.add('sign-up-col-left');
 
         document.getElementById('col-left-signup').classList.remove('hidden');

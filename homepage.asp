@@ -122,24 +122,24 @@ End If
                 function handleSubmit(event) { //funzione che aggunge al tasto Submit la funzione per inviare i dati
                     event.preventDefault();
 
-                    var title = document.getElementById("title").value;
-                    var car = $('input[name="car"]:checked').val();
+                    let title = document.getElementById("title").value;
+                    let car = $('input[name="car"]:checked').val();
 
-                    var multipleDays;
+                    let multipleDays;
                     if (document.getElementById("oneDay").checked) multipleDays = 0;
                     else if (document.getElementById("multipleDays").checked) multipleDays = 1;
 
-                    var startDate = document.getElementById("startDate").value;
-                    var endDate = document.getElementById("endDate").value;
+                    let startDate = document.getElementById("startDate").value;
+                    let endDate = document.getElementById("endDate").value;
 
-                    var allDay;
+                    let allDay;
                     if (document.getElementById("allDayYes").checked) allDay = 1;
                     else if (document.getElementById("allDayNo").checked) allDay = 0;
 
-                    var startTime = document.getElementById("startTime").value;
-                    var endTime = document.getElementById("endTime").value;
+                    let startTime = document.getElementById("startTime").value;
+                    let endTime = document.getElementById("endTime").value;
 
-                    var creator = <%=Session("userID")%>;
+                    let creator = <%=Session("userID")%>;
 
                     if (multipleDays && startDate == endDate) { // Verifica se si stanno inserendo date illegali
                         alert('If multiple days is selected, the start date and end date must be different.');
@@ -571,17 +571,17 @@ End If
 </div>
 
 <script>
-var modals = document.querySelectorAll('.modal');
-var tutorialBtn = document.getElementById("openTutorialModal");
-var form = document.getElementById("eventForm");
+let modals = document.querySelectorAll('.modal');
+let tutorialBtn = document.getElementById("openTutorialModal");
+let form = document.getElementById("eventForm");
 
 tutorialBtn.onclick = function() {
-    var modal = document.getElementById('myModal');
+    let modal = document.getElementById('myModal');
     modal.style.display = "block";
 }
 
 modals.forEach(function(modal) {
-  var closeButton = modal.querySelector('.close');
+  let closeButton = modal.querySelector('.close');
 
   closeButton.addEventListener('click', function() {
     resetModal();
