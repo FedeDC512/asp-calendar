@@ -5,10 +5,14 @@ This project is a comprehensive web application built using Classic ASP for a fi
 ## Table of Contents
 
 - [Key Features](#key-features)
-- [Login](#login)
+- [Login and Sign Up](#login-and-sign-up)
 - [Homepage](#homepage)
-- [Profile](#profile)
+- [Car Models List](#car-models-list)
+- [Managing Events](#managing-events)
+- [Permission Management](#permission-panagement)
+- [Responsive Pages](#responsive-pages)
 - [Databases](#databases)
+- [Mobile Demo](#mobile-demo)
 - [Demo](#demo)
 - [Conclusion](#conclusion)
 - [Credits](#credits)
@@ -26,10 +30,36 @@ This project is a comprehensive web application built using Classic ASP for a fi
 - **AJAX Integration:** The application uses AJAX for dynamic content updates without the need to reload the page, improving the user experience.
 
 
+## Login and Sign Up
+![login_signup.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/login_signup.gif)
+
+## Homepage
+![calendar.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/calendar.gif)
+![tutorial.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/tutorial.png)
+
+## Car Models List
+![cars.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/cars.png)
+
+## Managing Events
+manage_events.mp4
+
+## Permission Management
+![permissions_user.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/permissions_user.gif)
+![permissions_admin.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/permissions_admin.gif)
+
+## Responsive Pages
+![responsive.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/responsive.gif)
+
 ## Databases
 ![cars_db.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/cars_db.png)
 ![events_db.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/events_db.png)
 ![users_db.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/users_db.png)
+
+## Mobile Demo
+mobile_demo.MP4
+
+## Demo
+demo.mp4
 
 ## Conclusion
 
