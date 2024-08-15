@@ -19,7 +19,7 @@ This project is a comprehensive web application built using Classic ASP for a fi
 
 ## Key Features
 
-- **Event Management with FullCalendar:** The application integrates FullCalendar for scheduling and managing rental bookings. Users can create, view, and delete events directly from the calendar interface, with support for both single and multi-day events.
+- **Event Management with FullCalendar:** The application integrates FullCalendar for scheduling and managing rental bookings. Users can easily create, view, and remove events within the calendar interface, with flexibility for events spanning one or multiple days. Events can be scheduled as either full-day or confined to particular start and end times, allowing for four different configurations: a single full day, a single day with defined times, multiple full days, or multiple days with specific time frames.
 
 - **Session Management:** Ensuring user security and experience, the application includes robust session management. Users must be authenticated to access certain features, and their sessions are kept active through periodic server communication.
 
@@ -27,7 +27,7 @@ This project is a comprehensive web application built using Classic ASP for a fi
 
 - **User Roles:** The application supports different user roles (admin and regular users), with specific permissions for each, ensuring secure and controlled access to functionality. Regular users can move and delete only the events they have created themselves, while admins have the ability to move and delete any events, regardless of the creator.
 
-- **AJAX Integration:** The application uses AJAX for dynamic content updates without the need to reload the page, improving the user experience.
+- **AJAX Integration:** The application uses AJAX for dynamic content updates without requiring a page reload, enhancing the user experience. On the 'Car Models List' page, lazy loading is activated automatically as the user scrolls to the bottom, allowing for continuous and uninterrupted browsing.
 
 
 ## Login and Sign Up
