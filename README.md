@@ -13,7 +13,7 @@ This project is a comprehensive web application built using Classic ASP for a fi
 - [Responsive Pages](#responsive-pages)
 - [Databases](#databases)
 - [Mobile Demo](#mobile-demo)
-- [Demo](#demo)
+- [Desktop Demo](#desktop-demo)
 - [Conclusion](#conclusion)
 - [Credits](#credits)
 
@@ -25,7 +25,7 @@ This project is a comprehensive web application built using Classic ASP for a fi
 
 - **Responsive Design:** The application is optimized for mobile viewing, ensuring that users can manage their bookings and rentals from any device.
 
-- **User Roles:** The application supports different user roles (admin and regular users), with specific permissions for each, ensuring secure and controlled access to functionality.
+- **User Roles:** The application supports different user roles (admin and regular users), with specific permissions for each, ensuring secure and controlled access to functionality. Regular users can move and delete only the events they have created themselves, while admins have the ability to move and delete any events, regardless of the creator.
 
 - **AJAX Integration:** The application uses AJAX for dynamic content updates without the need to reload the page, improving the user experience.
 
@@ -44,7 +44,9 @@ This project is a comprehensive web application built using Classic ASP for a fi
 https://github.com/user-attachments/assets/9d589123-cad6-4963-8435-ef4831abe174
 
 ## Permission Management
+### User View
 ![permissions_user.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/permissions_user.gif)
+### Admin View
 ![permissions_admin.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/permissions_admin.gif)
 
 ## Responsive Pages
@@ -58,7 +60,7 @@ https://github.com/user-attachments/assets/9d589123-cad6-4963-8435-ef4831abe174
 ## Mobile Demo
 https://github.com/user-attachments/assets/adf60d32-14ca-43da-99b7-485f40669216
 
-## Demo
+## Desktop Demo
 https://github.com/user-attachments/assets/daf8c849-df24-463d-99ed-f0c6a6b3b72d
 
 ## Conclusion
