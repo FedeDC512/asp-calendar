@@ -38,10 +38,10 @@ This project is a comprehensive web application built using Classic ASP for a fi
 ![tutorial.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/tutorial.png)
 
 ## Car Models List
-![cars.png](https://github.com/FedeDC512/asp-calendar/blob/main/images/cars.png)
+![cars.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/cars.gif)
 
 ## Managing Events
-manage_events.mp4
+https://github.com/user-attachments/assets/9d589123-cad6-4963-8435-ef4831abe174
 
 ## Permission Management
 ![permissions_user.gif](https://github.com/FedeDC512/asp-calendar/blob/main/images/permissions_user.gif)
